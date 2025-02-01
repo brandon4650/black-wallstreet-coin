@@ -67,10 +67,16 @@ const BlackWallStreetCoin = () => {
             A groundbreaking cryptocurrency that honors the legacy of Black Wall Street while creating new paths to financial freedom and community prosperity.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <button className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 px-8 py-3 rounded-full font-medium text-lg transition-colors flex items-center justify-center">
+            <button 
+              onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+              className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 px-8 py-3 rounded-full font-medium text-lg transition-colors flex items-center justify-center"
+            >
               Buy $TULSA <ArrowRight className="ml-2 h-5 w-5" />
             </button>
-            <button className="w-full sm:w-auto border border-amber-500 hover:bg-amber-500/10 px-8 py-3 rounded-full font-medium text-lg transition-colors">
+            <button 
+              onClick={() => window.open('https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html', '_blank')}
+              className="w-full sm:w-auto border border-amber-500 hover:bg-amber-500/10 px-8 py-3 rounded-full font-medium text-lg transition-colors"
+            >
               Learn Our History
             </button>
           </div>
