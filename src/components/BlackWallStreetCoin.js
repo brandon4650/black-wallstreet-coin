@@ -74,7 +74,7 @@ const BlackWallStreetCoin = () => {
               Buy $TULSA <ArrowRight className="ml-2 h-5 w-5" />
             </button>
             <button 
-              onClick={() => window.open('https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html', '_blank')}
+              onClick={() => window.open('https://www.okhistory.org/publications/enc/entry?entry=TU013', '_blank')}
               className="w-full sm:w-auto border border-amber-500 hover:bg-amber-500/10 px-8 py-3 rounded-full font-medium text-lg transition-colors"
             >
               Learn Our History
