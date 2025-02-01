@@ -91,7 +91,9 @@ const BlackWallStreetCoin = () => {
               <p className="text-amber-500 font-medium">Contract Address (CA):</p>
               <div className="relative">
                 <div className="bg-zinc-900/50 p-4 rounded-lg flex justify-between items-center">
-                  <span className="text-zinc-300 font-mono">8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump</span>
+                  <span className="text-zinc-300 font-mono truncate max-w-[calc(100%-80px)]" title="8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump">
+                    8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump
+                  </span>
                   <button 
                     onClick={() => {
                       navigator.clipboard.writeText("8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump");
@@ -102,7 +104,7 @@ const BlackWallStreetCoin = () => {
                       }, 2000);
                     }}
                     id="copyButton"
-                    className="ml-4 px-3 py-1 bg-amber-600 hover:bg-amber-700 rounded-md text-sm font-medium transition-colors"
+                    className="shrink-0 ml-4 px-3 py-1 bg-amber-600 hover:bg-amber-700 rounded-md text-sm font-medium transition-colors"
                   >
                     Copy
                   </button>
