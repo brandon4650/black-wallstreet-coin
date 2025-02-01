@@ -101,6 +101,40 @@ const BlackWallStreetCoin = () => {
         </div>
       </section>
       
+      {/* Image Gallery Section */}
+      <section className="py-16 bg-zinc-800/30">
+        <div className="relative overflow-hidden">
+          <div className="flex animate-scroll">
+            {/* First set of images */}
+            {[...Array(10)].map((_, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-80 h-60 mx-4 rounded-lg overflow-hidden"
+              >
+                <img
+                  src={`/images/image${index + 1}.png`}
+                  alt={`Gallery Image ${index + 1}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+            {/* Duplicate set of images for seamless loop */}
+            {[...Array(10)].map((_, index) => (
+              <div
+                key={`duplicate-${index}`}
+                className="flex-shrink-0 w-80 h-60 mx-4 rounded-lg overflow-hidden"
+              >
+                <img
+                  src={`/images/image${index + 1}.png`}
+                  alt={`Gallery Image ${index + 1}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
       {/* Mission Section */}
       <section id="mission" className="py-20 px-4 bg-zinc-800/50">
         <div className="max-w-7xl mx-auto">
