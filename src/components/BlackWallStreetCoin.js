@@ -256,10 +256,8 @@ const BlackWallStreetCoin = () => {
             <span className="ml-2 text-xl font-bold">Black WallStreet Coin</span>
           </div>
           <div className="flex justify-center space-x-6 mb-8">
-            <a href="#" className="hover:text-amber-500 transition-colors">Twitter</a>
-            <a href="#" className="hover:text-amber-500 transition-colors">Telegram</a>
-            <a href="#" className="hover:text-amber-500 transition-colors">Discord</a>
-            <a href="#" className="hover:text-amber-500 transition-colors">Medium</a>
+            <a href="https://x.com/tulsabws?s=21&t=O1kPMRtIBO1KZa0XZZiSsg" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">Twitter/X</a>
+            <a href="https://t.co/J9bOqE3Z8w" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">Telegram</a>
           </div>
           <p className="text-zinc-400">© 2025 Black WallStreet Coin ($TULSA). All rights reserved.</p>
         </div>
