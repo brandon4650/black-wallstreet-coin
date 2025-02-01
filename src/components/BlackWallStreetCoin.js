@@ -74,7 +74,7 @@ const BlackWallStreetCoin = () => {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <button 
-              onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+              onClick={() => window.open('https://pump.fun/coin/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump', '_blank')}
               className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 px-8 py-3 rounded-full font-medium text-lg transition-colors flex items-center justify-center"
             >
               Buy $TULSA <ArrowRight className="ml-2 h-5 w-5" />
@@ -91,10 +91,10 @@ const BlackWallStreetCoin = () => {
               <p className="text-amber-500 font-medium">Contract Address (CA):</p>
               <div className="relative">
                 <div className="bg-zinc-900/50 p-4 rounded-lg flex justify-between items-center">
-                  <span className="text-zinc-300 font-mono">WILL BE POSTED SOON</span>
+                  <span className="text-zinc-300 font-mono">8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump</span>
                   <button 
                     onClick={() => {
-                      navigator.clipboard.writeText("WILL BE POSTED SOON");
+                      navigator.clipboard.writeText("8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump");
                       const button = document.getElementById('copyButton');
                       button.textContent = 'Copied!';
                       setTimeout(() => {
