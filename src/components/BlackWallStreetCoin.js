@@ -53,7 +53,10 @@ const BlackWallStreetCoin = () => {
               <a href="#features" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Features</a>
               <a href="#tokenomics" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Tokenomics</a>
               <a href="#vision" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Vision</a>
-              <button className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors">
+              <button 
+                onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
+              >
                 Join the Movement
               </button>
             </div>
