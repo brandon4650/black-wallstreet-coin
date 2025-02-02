@@ -6,7 +6,7 @@ const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-800 text-white">
+<div className="min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-800 text-white">
       {/* Navigation */}
       <nav className="fixed w-full bg-zinc-900/90 backdrop-blur-sm z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +23,8 @@ const BlackWallStreetCoin = () => {
                 <a href="#features" className="hover:text-amber-500 transition-colors">Features</a>
                 <a href="#tokenomics" className="hover:text-amber-500 transition-colors">Tokenomics</a>
                 <a href="#vision" className="hover:text-amber-500 transition-colors">Vision</a>
-                <button 
+                <a href="/chart" className="hover:text-amber-500 transition-colors">Live Chart</a>
+                <button
                   onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
                   className="bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
                 >
@@ -32,35 +33,36 @@ const BlackWallStreetCoin = () => {
               </div>
             </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-md hover:bg-zinc-800"
-              >
-                <ChevronDown className={`h-6 w-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
+              {/* Mobile menu button */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="p-2 rounded-md hover:bg-zinc-800"
+                >
+                  <ChevronDown className={`h-6 w-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-zinc-800">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="#mission" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Mission</a>
-              <a href="#features" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Features</a>
-              <a href="#tokenomics" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Tokenomics</a>
-              <a href="#vision" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Vision</a>
-              <button 
-                onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
-                className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
-              >
-                Join the Movement
-              </button>
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden bg-zinc-800">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <a href="#mission" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Mission</a>
+                <a href="#features" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Features</a>
+                <a href="#tokenomics" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Tokenomics</a>
+                <a href="#vision" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Vision</a>
+                <a href="/chart" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Live Chart</a>
+                <button
+                  onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                  className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
+                >
+                  Join the Movement
+                </button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </nav>
 
       {/* Hero Section */}
@@ -73,13 +75,13 @@ const BlackWallStreetCoin = () => {
             A groundbreaking cryptocurrency that honors the legacy of Black Wall Street while creating new paths to financial freedom and community prosperity.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <button 
+            <button
               onClick={() => window.open('https://pump.fun/coin/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump', '_blank')}
               className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 px-8 py-3 rounded-full font-medium text-lg transition-colors flex items-center justify-center"
             >
               Buy $TULSA <ArrowRight className="ml-2 h-5 w-5" />
             </button>
-            <button 
+            <button
               onClick={() => window.open('https://www.okhistory.org/publications/enc/entry?entry=TU013', '_blank')}
               className="w-full sm:w-auto border border-amber-500 hover:bg-amber-500/10 px-8 py-3 rounded-full font-medium text-lg transition-colors"
             >
@@ -94,7 +96,7 @@ const BlackWallStreetCoin = () => {
                   <span className="text-zinc-300 font-mono truncate max-w-[calc(100%-80px)]" title="8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump">
                     8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump
                   </span>
-                  <button 
+                  <button
                     onClick={() => {
                       navigator.clipboard.writeText("8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump");
                       const button = document.getElementById('copyButton');
@@ -114,7 +116,7 @@ const BlackWallStreetCoin = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Image Gallery Section */}
       <section className="py-16 bg-zinc-800/30">
         <div className="relative overflow-hidden">
@@ -148,7 +150,7 @@ const BlackWallStreetCoin = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Mission Section */}
       <section id="mission" className="py-20 px-4 bg-zinc-800/50">
         <div className="max-w-7xl mx-auto">
