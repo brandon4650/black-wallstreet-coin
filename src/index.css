@@ -15,3 +15,36 @@
   animation: scroll 30s linear infinite;
   display: flex;
 }
+
+/* New animations for roadmap */
+@keyframes arrowTravel {
+  0% {
+    transform: translateY(0) scale(1) rotate(90deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(50%) scale(1.2) rotate(90deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100%) scale(1) rotate(90deg);
+    opacity: 1;
+  }
+}
+
+.arrow-travel {
+  animation: arrowTravel 1s ease-in-out;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

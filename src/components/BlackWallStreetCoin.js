@@ -1,12 +1,18 @@
 
 import React, { useState } from 'react';
 import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe } from 'lucide-react';
+import ParticleBackground from './ParticleBackground';
+import HowToBuy from './HowToBuy';
+import PriceBanner from './PriceBanner';
+import InteractiveRoadmap from './InteractiveRoadmap';
 
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-<div className="min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-800 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-800 text-white">
+      <ParticleBackground />
+      <PriceBanner />
       {/* Navigation */}
       <nav className="fixed w-full bg-zinc-900/90 backdrop-blur-sm z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +21,7 @@ const BlackWallStreetCoin = () => {
               <Building2 className="h-8 w-8 text-amber-500" />
               <span className="ml-2 text-xl font-bold">Black WallStreet Coin</span>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="flex items-center space-x-8">
@@ -33,36 +39,36 @@ const BlackWallStreetCoin = () => {
               </div>
             </div>
 
-              {/* Mobile menu button */}
-              <div className="md:hidden">
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2 rounded-md hover:bg-zinc-800"
-                >
-                  <ChevronDown className={`h-6 w-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-              </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 rounded-md hover:bg-zinc-800"
+              >
+                <ChevronDown className={`h-6 w-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
             </div>
           </div>
+        </div>
 
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden bg-zinc-800">
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                <a href="#mission" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Mission</a>
-                <a href="#features" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Features</a>
-                <a href="#tokenomics" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Tokenomics</a>
-                <a href="#vision" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Vision</a>
-                <a href="/chart" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Live Chart</a>
-                <button
-                  onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
-                  className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
-                >
-                  Join the Movement
-                </button>
-              </div>
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-zinc-800">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <a href="#mission" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Mission</a>
+              <a href="#features" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Features</a>
+              <a href="#tokenomics" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Tokenomics</a>
+              <a href="#vision" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Vision</a>
+              <a href="/chart" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Live Chart</a>
+              <button
+                onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
+              >
+                Join the Movement
+              </button>
             </div>
-          )}
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -117,6 +123,7 @@ const BlackWallStreetCoin = () => {
         </div>
       </section>
 
+
       {/* Image Gallery Section */}
       <section className="py-16 bg-zinc-800/30">
         <div className="relative overflow-hidden">
@@ -150,6 +157,8 @@ const BlackWallStreetCoin = () => {
           </div>
         </div>
       </section>
+
+      <HowToBuy />
 
       {/* Mission Section */}
       <section id="mission" className="py-20 px-4 bg-zinc-800/50">
@@ -232,31 +241,7 @@ const BlackWallStreetCoin = () => {
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section id="vision" className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Our Vision for the Future</h2>
-          <div className="space-y-8">
-            {[
-              { phase: "Phase 1", title: "Foundation Building", items: ["Platform Launch", "Community Building", "Educational Initiatives"] },
-              { phase: "Phase 2", title: "Financial Infrastructure", items: ["DeFi Services Launch", "Community Banking", "Business Funding"] },
-              { phase: "Phase 3", title: "Global Expansion", items: ["International Partnerships", "Economic Zones", "Wealth Building Programs"] }
-            ].map((phase, index) => (
-              <div key={index} className="bg-zinc-800 p-6 rounded-xl">
-                <div className="flex items-center mb-4">
-                  <div className="bg-amber-500 text-sm font-medium px-3 py-1 rounded-full">{phase.phase}</div>
-                  <h3 className="text-xl font-semibold ml-4">{phase.title}</h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {phase.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="bg-zinc-700/50 p-4 rounded-lg">{item}</div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <InteractiveRoadmap />
 
       {/* Footer */}
       <footer className="bg-zinc-900 py-12 px-4">
