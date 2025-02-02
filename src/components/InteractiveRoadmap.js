@@ -96,7 +96,7 @@ const InteractiveRoadmap = () => {
           items: [
             { icon: <Rocket className="h-5 w-5" />, text: "Token Launch on DEX", status: 1 },
             { icon: <Lock className="h-5 w-5" />, text: "Liquidity Locking", status: 1 },
-            { icon: <BarChart className="h-5 w-5" />, text: "DEXTools Update", status: 2 },
+            { icon: <BarChart className="h-5 w-5" />, text: "DEXScreener Paid", status: 1 },
             { icon: <Search className="h-5 w-5" />, text: "DexScreener Listing", status: 2 }
           ]
         },
