@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Code, Shield, Globe, Users, Rocket, Lock, BarChart, Search, 
-  Megaphone, Trending, BadgeDollarSign, ArrowRightLeft, Coins, 
-  RefreshCw, Link, Landmark, PiggyBank, ShieldCheck, Building2,
-  Handshake, Target, BadgeCheck, Wallet, LayoutDashboard, Box,
-  GanttChart, Network, Building, Blocks, Goal
+    Code, Shield, Globe, Users, Rocket, Lock, BarChart, Search, 
+    MessageCircle, TrendingUp, DollarSign, ArrowRightLeft, Coins, 
+    RefreshCw, Link, Landmark, PiggyBank, CheckCircle, Building2,
+    Handshake, Target, Check, Wallet, LayoutDashboard, Box,
+    GanttChartSquare, Network, Building, Boxes, Goal, Loader2,
+    ArrowDown
 } from 'lucide-react';
 
 // Status types remain the same
@@ -78,90 +79,89 @@ const RoadmapItem = ({ phase, title, items, phaseStatus, isLastPhase }) => {
 };
 
 const InteractiveRoadmap = () => {
-  const roadmapData = [
-    {
-      phase: "Phase 1",
-      title: "Foundation & Launch",
-      items: [
-        { icon: <Code className="h-5 w-5" />, text: "Smart Contract Development", status: STATUS.COMPLETE },
-        { icon: <Shield className="h-5 w-5" />, text: "Contract Audit", status: STATUS.COMPLETE },
-        { icon: <Globe className="h-5 w-5" />, text: "Website Launch", status: STATUS.COMPLETE },
-        { icon: <Users className="h-5 w-5" />, text: "Community Building", status: STATUS.COMPLETE }
-      ]
-    },
-    {
-      phase: "Phase 2",
-      title: "Initial Launch & Security",
-      items: [
-        { icon: <Rocket className="h-5 w-5" />, text: "Token Launch on DEX", status: STATUS.IN_PROGRESS },
-        { icon: <Lock className="h-5 w-5" />, text: "Liquidity Locking", status: STATUS.PENDING },
-        { icon: <BarChart className="h-5 w-5" />, text: "DEXTools Update", status: STATUS.PENDING },
-        { icon: <Search className="h-5 w-5" />, text: "DexScreener Listing", status: STATUS.PENDING }
-      ]
-    },
-    {
-      phase: "Phase 3",
-      title: "Marketing & Growth",
-      items: [
-        { icon: <Megaphone className="h-5 w-5" />, text: "Marketing Campaign Launch", status: STATUS.PENDING },
-        { icon: <Users className="h-5 w-5" />, text: "Influencer Partnerships", status: STATUS.PENDING },
-        { icon: <Trending className="h-5 w-5" />, text: "Trending on DEXTools", status: STATUS.PENDING },
-        { icon: <BadgeDollarSign className="h-5 w-5" />, text: "DEX Listing Payments", status: STATUS.PENDING }
-      ]
-    },
-    {
-      phase: "Phase 4",
-      title: "Exchange Integration",
-      items: [
-        { icon: <ArrowRightLeft className="h-5 w-5" />, text: "Raydium Integration", status: STATUS.PENDING },
-        { icon: <Coins className="h-5 w-5" />, text: "Jupiter Integration", status: STATUS.PENDING },
-        { icon: <RefreshCw className="h-5 w-5" />, text: "Price Bot Implementation", status: STATUS.PENDING },
-        { icon: <ChartBar className="h-5 w-5" />, text: "Volume Building", status: STATUS.PENDING }
-      ]
-    },
-    {
-      phase: "Phase 5",
-      title: "Ecosystem Expansion",
-      items: [
-        { icon: <Link className="h-5 w-5" />, text: "Token Bonding", status: STATUS.PENDING },
-        { icon: <Landmark className="h-5 w-5" />, text: "Staking Platform Launch", status: STATUS.PENDING },
-        { icon: <PiggyBank className="h-5 w-5" />, text: "Reward System Implementation", status: STATUS.PENDING },
-        { icon: <ShieldCheck className="h-5 w-5" />, text: "Security Upgrades", status: STATUS.PENDING }
-      ]
-    },
-    {
-      phase: "Phase 6",
-      title: "CEX & Partnerships",
-      items: [
-        { icon: <Building2 className="h-5 w-5" />, text: "CEX Listings", status: STATUS.PENDING },
-        { icon: <Handshake className="h-5 w-5" />, text: "Strategic Partnerships", status: STATUS.PENDING },
-        { icon: <Target className="h-5 w-5" />, text: "Market Making Integration", status: STATUS.PENDING },
-        { icon: <BadgeCheck className="h-5 w-5" />, text: "Additional Audits", status: STATUS.PENDING }
-      ]
-    },
-    {
-      phase: "Phase 7",
-      title: "Advanced Features",
-      items: [
-        { icon: <Wallet className="h-5 w-5" />, text: "Multi-Chain Bridge", status: STATUS.PENDING },
-        { icon: <LayoutDashboard className="h-5 w-5" />, text: "Governance Platform", status: STATUS.PENDING },
-        { icon: <Box className="h-5 w-5" />, text: "NFT Integration", status: STATUS.PENDING },
-        { icon: <GanttChart className="h-5 w-5" />, text: "Ecosystem Analytics", status: STATUS.PENDING }
-      ]
-    },
-    {
-      phase: "Phase 8",
-      title: "Future Development",
-      items: [
-        { icon: <Network className="h-5 w-5" />, text: "Cross-Chain Expansion", status: STATUS.PENDING },
-        { icon: <Building className="h-5 w-5" />, text: "DAO Implementation", status: STATUS.PENDING },
-        { icon: <Blocks className="h-5 w-5" />, text: "DeFi Tools Suite", status: STATUS.PENDING },
-        { icon: <Goal className="h-5 w-5" />, text: "Real World Integration", status: STATUS.PENDING }
-      ]
-    }
-  ];
-
-  return (
+    const roadmapData = [
+        {
+          phase: "Phase 1",
+          title: "Foundation & Launch",
+          items: [
+            { icon: <Code className="h-5 w-5" />, text: "Smart Contract Development", status: STATUS.COMPLETE },
+            { icon: <Shield className="h-5 w-5" />, text: "Contract Audit", status: STATUS.COMPLETE },
+            { icon: <Globe className="h-5 w-5" />, text: "Website Launch", status: STATUS.COMPLETE },
+            { icon: <Users className="h-5 w-5" />, text: "Community Building", status: STATUS.COMPLETE }
+          ]
+        },
+        {
+          phase: "Phase 2",
+          title: "Initial Launch & Security",
+          items: [
+            { icon: <Rocket className="h-5 w-5" />, text: "Token Launch on DEX", status: STATUS.IN_PROGRESS },
+            { icon: <Lock className="h-5 w-5" />, text: "Liquidity Locking", status: STATUS.PENDING },
+            { icon: <BarChart className="h-5 w-5" />, text: "DEXTools Update", status: STATUS.PENDING },
+            { icon: <Search className="h-5 w-5" />, text: "DexScreener Listing", status: STATUS.PENDING }
+          ]
+        },
+        {
+          phase: "Phase 3",
+          title: "Marketing & Growth",
+          items: [
+            { icon: <MessageCircle className="h-5 w-5" />, text: "Marketing Campaign Launch", status: STATUS.PENDING },
+            { icon: <Users className="h-5 w-5" />, text: "Influencer Partnerships", status: STATUS.PENDING },
+            { icon: <TrendingUp className="h-5 w-5" />, text: "Trending on DEXTools", status: STATUS.PENDING },
+            { icon: <DollarSign className="h-5 w-5" />, text: "DEX Listing Payments", status: STATUS.PENDING }
+          ]
+        },
+        {
+          phase: "Phase 4",
+          title: "Exchange Integration",
+          items: [
+            { icon: <ArrowRightLeft className="h-5 w-5" />, text: "Raydium Integration", status: STATUS.PENDING },
+            { icon: <Coins className="h-5 w-5" />, text: "Jupiter Integration", status: STATUS.PENDING },
+            { icon: <RefreshCw className="h-5 w-5" />, text: "Price Bot Implementation", status: STATUS.PENDING },
+            { icon: <BarChart className="h-5 w-5" />, text: "Volume Building", status: STATUS.PENDING }
+          ]
+        },
+        {
+          phase: "Phase 5",
+          title: "Ecosystem Expansion",
+          items: [
+            { icon: <Link className="h-5 w-5" />, text: "Token Bonding", status: STATUS.PENDING },
+            { icon: <Landmark className="h-5 w-5" />, text: "Staking Platform Launch", status: STATUS.PENDING },
+            { icon: <PiggyBank className="h-5 w-5" />, text: "Reward System Implementation", status: STATUS.PENDING },
+            { icon: <CheckCircle className="h-5 w-5" />, text: "Security Upgrades", status: STATUS.PENDING }
+          ]
+        },
+        {
+          phase: "Phase 6",
+          title: "CEX & Partnerships",
+          items: [
+            { icon: <Building2 className="h-5 w-5" />, text: "CEX Listings", status: STATUS.PENDING },
+            { icon: <Users className="h-5 w-5" />, text: "Strategic Partnerships", status: STATUS.PENDING },
+            { icon: <Target className="h-5 w-5" />, text: "Market Making Integration", status: STATUS.PENDING },
+            { icon: <Shield className="h-5 w-5" />, text: "Additional Audits", status: STATUS.PENDING }
+          ]
+        },
+        {
+          phase: "Phase 7",
+          title: "Advanced Features",
+          items: [
+            { icon: <Wallet className="h-5 w-5" />, text: "Multi-Chain Bridge", status: STATUS.PENDING },
+            { icon: <LayoutDashboard className="h-5 w-5" />, text: "Governance Platform", status: STATUS.PENDING },
+            { icon: <Box className="h-5 w-5" />, text: "NFT Integration", status: STATUS.PENDING },
+            { icon: <BarChart className="h-5 w-5" />, text: "Ecosystem Analytics", status: STATUS.PENDING }
+          ]
+        },
+        {
+          phase: "Phase 8",
+          title: "Future Development",
+          items: [
+            { icon: <Network className="h-5 w-5" />, text: "Cross-Chain Expansion", status: STATUS.PENDING },
+            { icon: <Building className="h-5 w-5" />, text: "DAO Implementation", status: STATUS.PENDING },
+            { icon: <Boxes className="h-5 w-5" />, text: "DeFi Tools Suite", status: STATUS.PENDING },
+            { icon: <Target className="h-5 w-5" />, text: "Real World Integration", status: STATUS.PENDING }
+          ]
+        }
+    ];
+    return (
         <section id="roadmap" className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-4xl font-bold text-center mb-12">Project Roadmap</h2>
@@ -177,6 +177,7 @@ const InteractiveRoadmap = () => {
             </div>
         </section>
     );
+
 };
 
 export default InteractiveRoadmap;
