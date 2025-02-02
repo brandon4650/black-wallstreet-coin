@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Check, Rocket, Users, BarChart, Globe, Shield, Building2, ArrowDown, Loader2 } from 'lucide-react';
+import { 
+  Code, Shield, Globe, Users, Rocket, Lock, BarChart, Search, 
+  Megaphone, Trending, BadgeDollarSign, ArrowRightLeft, Coins, 
+  RefreshCw, Link, Landmark, PiggyBank, ShieldCheck, Building2,
+  Handshake, Target, BadgeCheck, Wallet, LayoutDashboard, Box,
+  GanttChart, Network, Building, Blocks, Goal
+} from 'lucide-react';
 
 // Status types remain the same
 const STATUS = {
