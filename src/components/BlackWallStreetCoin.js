@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe } from 'lucide-react';
+import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 import HowToBuy from './HowToBuy';
 import PriceBanner from './PriceBanner';
 import InteractiveRoadmap from './InteractiveRoadmap';
+import Partnerships from './Partnerships';
 
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -120,6 +121,25 @@ const BlackWallStreetCoin = () => {
               </div>
             </div>
           </div>
+
+          {/* Add DEX PAID section here */}
+          <div className="max-w-lg mx-auto mt-4 bg-zinc-800/50 rounded-xl p-4 group relative">
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-4xl font-bold tracking-wider text-green-500 animate-pulse transition-all duration-300 group-hover:text-green-400">
+                DEX PAID
+              </span>
+              <Check className="h-8 w-8 text-green-500 transition-all duration-300 group-hover:text-green-400 animate-bounce" />
+            </div>
+            
+            {/* Hover Image */}
+            <div className="absolute -bottom-2 left-1/2 transform translate-y-full -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
+              <img 
+                src="/images/dexpaid.png" 
+                alt="DEX Paid Proof" 
+                className="w-64 h-auto rounded-lg shadow-2xl border border-green-500/20"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -159,6 +179,7 @@ const BlackWallStreetCoin = () => {
       </section>
 
       <HowToBuy />
+      <Partnerships />
 
       {/* Mission Section */}
       <section id="mission" className="py-20 px-4 bg-zinc-800/50">
