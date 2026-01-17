@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check, Sparkles, ExternalLink, Copy, Star, Zap, TrendingUp, Rocket, Twitter } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 import HowToBuy from './HowToBuy';
 import PriceBanner from './PriceBanner';
@@ -9,48 +9,87 @@ import Partnerships from './Partnerships';
 
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef(null);
+
+  // Parallax effect
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-800 text-white">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <ParticleBackground />
       <PriceBanner />
-      {/* Navigation */}
-      <nav className="fixed w-full glass-dark z-50 border-b border-amber-500/10">
+      
+      {/* Premium Navigation */}
+      <nav className="fixed w-full z-50 transition-all duration-300" style={{
+        background: scrollY > 50 ? 'rgba(0,0,0,0.9)' : 'transparent',
+        backdropFilter: scrollY > 50 ? 'blur(20px)' : 'none',
+        borderBottom: scrollY > 50 ? '1px solid rgba(245,158,11,0.1)' : 'none'
+      }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center group">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex items-center gap-3 group cursor-pointer">
               <div className="relative">
-                <Building2 className="h-8 w-8 text-amber-500 transition-transform group-hover:scale-110" />
-                <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                <img 
+                  src="/images/coin-logo.png" 
+                  alt="$TULSA Coin" 
+                  className="h-12 w-12 rounded-full transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-amber-500/30 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <span className="ml-2 text-xl font-bold gradient-text-gold">Black WallStreet Coin</span>
+              <div>
+                <span className="text-xl font-bold gradient-text-gold">Black WallStreet</span>
+                <span className="text-xs text-amber-500 block">$TULSA</span>
+              </div>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="flex items-center space-x-8">
-                <a href="#mission" className="hover:text-amber-500 transition-colors">Mission</a>
-                <a href="#features" className="hover:text-amber-500 transition-colors">Features</a>
-                <a href="#tokenomics" className="hover:text-amber-500 transition-colors">Tokenomics</a>
-                <a href="#vision" className="hover:text-amber-500 transition-colors">Vision</a>
-                <a href="/chart" className="hover:text-amber-500 transition-colors">Live Chart</a>
-                <button
-                  onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
-                  className="relative bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 px-6 py-2 rounded-full font-medium transition-all duration-300 hover-glow-gold overflow-hidden group"
+            <div className="hidden md:flex items-center gap-8">
+              {['Mission', 'Features', 'Tokenomics', 'Roadmap'].map((item) => (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`} 
+                  className="relative text-zinc-300 hover:text-white transition-colors group py-2"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Join the Movement
-                    <Sparkles className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </span>
-                </button>
-              </div>
+                  {item}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-300 group-hover:w-full transition-all duration-300" />
+                </a>
+              ))}
+              <a 
+                href="/chart" 
+                className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1"
+              >
+                Live Chart <TrendingUp className="h-4 w-4" />
+              </a>
+              <button
+                onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                className="relative overflow-hidden bg-gradient-to-r from-amber-600 to-amber-500 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] group"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Join Movement
+                  <Rocket className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile menu */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-md hover:bg-zinc-800"
+                className="p-2 rounded-lg glass"
               >
                 <ChevronDown className={`h-6 w-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -60,16 +99,23 @@ const BlackWallStreetCoin = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-zinc-800">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="#mission" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Mission</a>
-              <a href="#features" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Features</a>
-              <a href="#tokenomics" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Tokenomics</a>
-              <a href="#vision" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Vision</a>
-              <a href="/chart" className="block px-3 py-2 hover:bg-zinc-700 rounded-md">Live Chart</a>
+          <div className="md:hidden glass-dark border-t border-amber-500/10">
+            <div className="px-4 py-4 space-y-2">
+              {['Mission', 'Features', 'Tokenomics', 'Roadmap'].map((item) => (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`} 
+                  className="block px-4 py-3 text-zinc-300 hover:text-white hover:bg-amber-500/10 rounded-lg transition-colors"
+                >
+                  {item}
+                </a>
+              ))}
+              <a href="/chart" className="block px-4 py-3 text-amber-400 hover:bg-amber-500/10 rounded-lg">
+                Live Chart
+              </a>
               <button
                 onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
-                className="w-full text-center bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
+                className="w-full bg-gradient-to-r from-amber-600 to-amber-500 px-6 py-3 rounded-full font-semibold mt-2"
               >
                 Join the Movement
               </button>
@@ -78,109 +124,192 @@ const BlackWallStreetCoin = () => {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 relative">
-        {/* Background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            Rebuilding Black Wall Street in the <span className="shimmer-text">Digital Age</span>
-          </h1>
-          <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
-            A groundbreaking cryptocurrency that honors the legacy of Black Wall Street while creating new paths to financial freedom and community prosperity.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <button
-              onClick={() => window.open('https://pump.fun/coin/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump', '_blank')}
-              className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 px-8 py-3 rounded-full font-medium text-lg transition-colors flex items-center justify-center"
-            >
-              Buy $TULSA <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
-            <button
-              onClick={() => window.open('https://www.okhistory.org/publications/enc/entry?entry=TU013', '_blank')}
-              className="w-full sm:w-auto border border-amber-500 hover:bg-amber-500/10 px-8 py-3 rounded-full font-medium text-lg transition-colors"
-            >
-              Learn Our History
-            </button>
-          </div>
-          <div className="max-w-lg mx-auto bg-zinc-800/50 rounded-xl p-6">
-            <div className="flex flex-col gap-2">
-              <p className="text-amber-500 font-medium">Contract Address (CA):</p>
-              <div className="relative">
-                <div className="bg-zinc-900/50 p-4 rounded-lg flex justify-between items-center">
-                  <span className="text-zinc-300 font-mono truncate max-w-[calc(100%-80px)]" title="8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump">
+      {/* EPIC HERO SECTION */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-40"
+            style={{
+              backgroundImage: 'url(/images/hero-bg.png)',
+              transform: `translateY(${scrollY * 0.3}px)`
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-50" />
+        </div>
+
+        {/* Floating particles effect */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-amber-500/30 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Text */}
+          <div className="text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-gold mb-6">
+              <Star className="h-4 w-4 text-amber-500" />
+              <span className="text-sm text-amber-400">Honoring History • Building the Future</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+              <span className="block text-white">Rebuilding</span>
+              <span className="block shimmer-text">Black Wall Street</span>
+              <span className="block text-zinc-400 text-3xl md:text-4xl lg:text-5xl font-normal mt-2">
+                in the Digital Age
+              </span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-zinc-400 mb-8 max-w-xl mx-auto lg:mx-0">
+              A groundbreaking cryptocurrency honoring the legacy of Tulsa's historic Greenwood District, 
+              creating new paths to financial freedom and community prosperity.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
+              <button
+                onClick={() => window.open('https://pump.fun/coin/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump', '_blank')}
+                className="w-full sm:w-auto group relative overflow-hidden bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-[0_0_40px_rgba(245,158,11,0.6)]"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Buy $TULSA <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </button>
+              <button
+                onClick={() => window.open('https://www.okhistory.org/publications/enc/entry?entry=TU013', '_blank')}
+                className="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-lg border-2 border-amber-500/50 hover:border-amber-500 hover:bg-amber-500/10 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                Our History <ExternalLink className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Contract Address */}
+            <div className="glass rounded-2xl p-4 max-w-lg mx-auto lg:mx-0">
+              <div className="flex items-center justify-between gap-4">
+                <div className="min-w-0">
+                  <p className="text-xs text-amber-500 font-medium mb-1">Contract Address (CA)</p>
+                  <p className="text-sm font-mono text-zinc-300 truncate">
                     8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump
-                  </span>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText("8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump");
-                      const button = document.getElementById('copyButton');
-                      button.textContent = 'Copied!';
-                      setTimeout(() => {
-                        button.textContent = 'Copy';
-                      }, 2000);
-                    }}
-                    id="copyButton"
-                    className="shrink-0 ml-4 px-3 py-1 bg-amber-600 hover:bg-amber-700 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Copy
-                  </button>
+                  </p>
+                </div>
+                <button
+                  onClick={handleCopy}
+                  className={`flex-shrink-0 px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 ${
+                    copied 
+                      ? 'bg-green-500/20 text-green-400' 
+                      : 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
+                  }`}
+                >
+                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
+            </div>
+
+            {/* DEX PAID Badge */}
+            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30">
+              <Check className="h-5 w-5 text-green-500" />
+              <span className="text-green-400 font-semibold">DEX PAID</span>
+              <Sparkles className="h-4 w-4 text-green-500 animate-pulse" />
+            </div>
+          </div>
+
+          {/* Right Side - 3D Coin */}
+          <div className="hidden lg:flex items-center justify-center relative">
+            <div className="relative">
+              {/* Glow effect behind coin */}
+              <div className="absolute inset-0 bg-amber-500/20 blur-[100px] rounded-full scale-150" />
+              
+              {/* Main coin image */}
+              <img 
+                src="/images/coin-3d.png" 
+                alt="$TULSA 3D Coin" 
+                className="relative z-10 w-[500px] h-[500px] object-contain animate-float"
+                style={{ animationDuration: '4s' }}
+              />
+              
+              {/* Orbiting elements */}
+              <div className="absolute inset-0 animate-spin" style={{ animationDuration: '20s' }}>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8">
+                  <Zap className="h-8 w-8 text-amber-500" />
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Add DEX PAID section here */}
-          <div className="max-w-lg mx-auto mt-4 bg-zinc-800/50 rounded-xl p-4 group relative">
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-4xl font-bold tracking-wider text-green-500 animate-pulse transition-all duration-300 group-hover:text-green-400">
-                DEX PAID
-              </span>
-              <Check className="h-8 w-8 text-green-500 transition-all duration-300 group-hover:text-green-400 animate-bounce" />
-            </div>
-            
-            {/* Hover Image */}
-            <div className="absolute -bottom-2 left-1/2 transform translate-y-full -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 z-50">
-              <img 
-                src="/images/dexpaid.png" 
-                alt="DEX Paid Proof" 
-                className="w-64 h-auto rounded-lg shadow-2xl border border-green-500/20"
-              />
-            </div>
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronDown className="h-8 w-8 text-amber-500/50" />
+        </div>
+      </section>
+
+      {/* Stats Bar */}
+      <section className="relative z-10 -mt-20 mb-20">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="glass rounded-2xl p-6 grid grid-cols-2 md:grid-cols-4 gap-6 border border-amber-500/10">
+            {[
+              { label: 'Community', value: '10K+', icon: <Users className="h-5 w-5" /> },
+              { label: 'Holders', value: '5K+', icon: <Shield className="h-5 w-5" /> },
+              { label: 'Market Cap', value: '$500K', icon: <BarChart className="h-5 w-5" /> },
+              { label: 'Phase', value: '2/8', icon: <Rocket className="h-5 w-5" /> }
+            ].map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-500/10 text-amber-500 mb-2">
+                  {stat.icon}
+                </div>
+                <p className="text-2xl md:text-3xl font-bold text-white">{stat.value}</p>
+                <p className="text-sm text-zinc-500">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-
       {/* Image Gallery Section */}
-      <section className="py-16 bg-zinc-800/30">
+      <section className="py-16 bg-gradient-to-b from-black to-zinc-900/50">
+        <div className="mb-8 text-center">
+          <h3 className="text-2xl font-bold text-white mb-2">The Legacy Lives On</h3>
+          <p className="text-zinc-500">Honoring the spirit of Greenwood</p>
+        </div>
         <div className="relative overflow-hidden">
           <div className="flex animate-scroll">
-            {/* First set of images */}
             {[...Array(10)].map((_, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-80 h-60 mx-4 rounded-lg overflow-hidden"
+                className="flex-shrink-0 w-80 h-60 mx-4 rounded-2xl overflow-hidden group relative"
               >
                 <img
                   src={`/images/image${index + 1}.png`}
                   alt={`Gallery Image ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
-            {/* Duplicate set of images for seamless loop */}
             {[...Array(10)].map((_, index) => (
               <div
                 key={`duplicate-${index}`}
-                className="flex-shrink-0 w-80 h-60 mx-4 rounded-lg overflow-hidden"
+                className="flex-shrink-0 w-80 h-60 mx-4 rounded-2xl overflow-hidden group relative"
               >
                 <img
                   src={`/images/image${index + 1}.png`}
                   alt={`Gallery Image ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
           </div>
@@ -191,60 +320,114 @@ const BlackWallStreetCoin = () => {
       <Partnerships />
 
       {/* Mission Section */}
-      <section id="mission" className="py-20 px-4 bg-zinc-800/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <section id="mission" className="py-24 px-4 relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green-500/5 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
-              <p className="text-lg text-zinc-300 mb-6">
-                The Black WallStreet Coin ($TULSA) is more than a cryptocurrency—it's a movement to rebuild and empower Black communities globally through blockchain technology.
+              <span className="inline-block px-4 py-2 rounded-full glass-gold text-amber-400 text-sm font-medium mb-6">
+                Our Mission
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Empowering <span className="shimmer-text">Black Communities</span> Through Blockchain
+              </h2>
+              <p className="text-lg text-zinc-400 mb-6">
+                The Black WallStreet Coin ($TULSA) is more than a cryptocurrency—it's a movement to rebuild 
+                and empower Black communities globally through blockchain technology.
               </p>
-              <p className="text-lg text-zinc-300">
-                We're creating a decentralized financial ecosystem that mirrors the strength and unity of the original Black Wall Street, fostering financial independence and generational wealth.
+              <p className="text-lg text-zinc-400 mb-8">
+                We're creating a decentralized financial ecosystem that mirrors the strength and unity of 
+                the original Black Wall Street, fostering financial independence and generational wealth.
               </p>
+              
+              {/* Mission points */}
+              <div className="space-y-4">
+                {[
+                  { num: '01', text: 'First crypto bank focused on Black community empowerment' },
+                  { num: '02', text: 'Blockchain innovation driving financial inclusion' },
+                  { num: '03', text: 'Community-driven governance and development' }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4 group">
+                    <span className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-sm font-bold group-hover:scale-110 transition-transform">
+                      {item.num}
+                    </span>
+                    <p className="text-zinc-300 pt-2">{item.text}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="bg-zinc-700/30 p-8 rounded-xl">
-              <h3 className="text-2xl font-semibold mb-6 text-amber-500">Building for the Future</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mt-1 mr-3">
-                    <span className="text-amber-500">1</span>
-                  </div>
-                  <p>First crypto bank focused on Black community empowerment</p>
-                </li>
-                <li className="flex items-start">
-                  <div className="h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mt-1 mr-3">
-                    <span className="text-amber-500">2</span>
-                  </div>
-                  <p>Blockchain innovation driving financial inclusion</p>
-                </li>
-                <li className="flex items-start">
-                  <div className="h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mt-1 mr-3">
-                    <span className="text-amber-500">3</span>
-                  </div>
-                  <p>Community-driven governance and development</p>
-                </li>
-              </ul>
+            
+            {/* Right side - coin display */}
+            <div className="flex items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-amber-500/10 blur-[80px] rounded-full" />
+                <img 
+                  src="/images/coin-logo.png" 
+                  alt="$TULSA" 
+                  className="relative z-10 w-80 h-80 object-contain animate-float"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4">
+      <section id="features" className="py-24 px-4 bg-gradient-to-b from-zinc-900/50 to-black">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Building Economic Power</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-2 rounded-full glass-gold text-amber-400 text-sm font-medium mb-4">
+              Why $TULSA
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Building <span className="gradient-text-gold">Economic Power</span>
+            </h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">
+              Innovative solutions designed for community wealth building and financial freedom
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <BarChart className="h-8 w-8" />, title: "Financial Innovation", description: "Advanced DeFi protocols designed for community wealth building" },
-              { icon: <Shield className="h-8 w-8" />, title: "Secure Infrastructure", description: "Enterprise-grade security protecting community assets" },
-              { icon: <Users className="h-8 w-8" />, title: "Community First", description: "Governance system ensuring community voice and participation" },
-              { icon: <Globe className="h-8 w-8" />, title: "Global Impact", description: "Connecting and empowering Black communities worldwide" }
+              { 
+                icon: <BarChart className="h-8 w-8" />, 
+                title: "Financial Innovation", 
+                description: "Advanced DeFi protocols designed for community wealth building",
+                color: "from-amber-500 to-orange-600"
+              },
+              { 
+                icon: <Shield className="h-8 w-8" />, 
+                title: "Secure Infrastructure", 
+                description: "Enterprise-grade security protecting community assets",
+                color: "from-green-500 to-emerald-600"
+              },
+              { 
+                icon: <Users className="h-8 w-8" />, 
+                title: "Community First", 
+                description: "Governance system ensuring community voice and participation",
+                color: "from-blue-500 to-cyan-600"
+              },
+              { 
+                icon: <Globe className="h-8 w-8" />, 
+                title: "Global Impact", 
+                description: "Connecting and empowering Black communities worldwide",
+                color: "from-purple-500 to-pink-600"
+              }
             ].map((feature, index) => (
-              <div key={index} className="bg-zinc-800 p-6 rounded-xl hover:bg-zinc-700 transition-colors">
-                <div className="text-amber-500 mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-zinc-300">{feature.description}</p>
+              <div 
+                key={index} 
+                className="group glass rounded-2xl p-6 hover-lift hover-glow-gold transition-all duration-300 border border-transparent hover:border-amber-500/20"
+              >
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform`}>
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-white">{feature.title}</h3>
+                <p className="text-zinc-400">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -252,31 +435,39 @@ const BlackWallStreetCoin = () => {
       </section>
 
       {/* Tokenomics Section */}
-      <section id="tokenomics" className="py-20 px-4 bg-zinc-800/30 relative overflow-hidden">
-        {/* Background accent */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <section id="tokenomics" className="py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-3xl" />
+        </div>
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            <span className="shimmer-text">$TULSA</span> Tokenomics
-          </h2>
-          <p className="text-zinc-400 text-center mb-12 max-w-2xl mx-auto">
-            Built for long-term sustainability and community growth
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-2 rounded-full glass-gold text-amber-400 text-sm font-medium mb-4">
+              Token Distribution
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="shimmer-text">$TULSA</span> Tokenomics
+            </h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">
+              Built for long-term sustainability and community growth
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: "Community Allocation", value: "40%", description: "Reserved for community development and initiatives", color: "from-green-500 to-emerald-600" },
-              { title: "Development Fund", value: "30%", description: "Dedicated to platform development and expansion", color: "from-amber-500 to-orange-600" },
-              { title: "Public Sale", value: "30%", description: "Available for public participation and liquidity", color: "from-blue-500 to-indigo-600" }
+              { title: "Community Allocation", value: "40%", description: "Reserved for community development and initiatives", color: "from-green-500 to-emerald-600", icon: <Users /> },
+              { title: "Development Fund", value: "30%", description: "Dedicated to platform development and expansion", color: "from-amber-500 to-orange-600", icon: <Zap /> },
+              { title: "Public Sale", value: "30%", description: "Available for public participation and liquidity", color: "from-blue-500 to-indigo-600", icon: <Globe /> }
             ].map((stat, index) => (
-              <div key={index} className="glass rounded-2xl p-8 text-center hover-lift hover-glow-gold group">
-                <h3 className="text-xl font-semibold mb-4 text-zinc-300">{stat.title}</h3>
-                <p className={`text-5xl font-bold mb-4 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+              <div key={index} className="glass rounded-3xl p-8 text-center hover-lift hover-glow-gold group border border-transparent hover:border-amber-500/20">
+                <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform`}>
+                  {stat.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-zinc-300">{stat.title}</h3>
+                <p className={`text-6xl font-black mb-4 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                   {stat.value}
                 </p>
                 <p className="text-zinc-400">{stat.description}</p>
-                {/* Decorative element */}
-                <div className={`mt-6 h-1 w-16 mx-auto rounded-full bg-gradient-to-r ${stat.color} opacity-50 group-hover:opacity-100 group-hover:w-24 transition-all duration-300`} />
               </div>
             ))}
           </div>
@@ -286,17 +477,70 @@ const BlackWallStreetCoin = () => {
       <EpicRoadmap />
 
       {/* Footer */}
-      <footer className="bg-zinc-900 py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center mb-8">
-            <Building2 className="h-8 w-8 text-amber-500" />
-            <span className="ml-2 text-xl font-bold">Black WallStreet Coin</span>
+      <footer className="bg-black border-t border-zinc-800 py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* CTA Section */}
+          <div className="glass rounded-3xl p-8 md:p-12 mb-16 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-transparent to-amber-500/10" />
+            <div className="relative z-10">
+              <h3 className="text-3xl md:text-4xl font-bold mb-4">
+                Join the <span className="shimmer-text">Movement</span>
+              </h3>
+              <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
+                Be part of history as we rebuild Black Wall Street in the digital age
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <button
+                  onClick={() => window.open('https://pump.fun/coin/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump', '_blank')}
+                  className="bg-gradient-to-r from-amber-600 to-amber-500 px-8 py-4 rounded-full font-bold text-lg hover:shadow-[0_0_40px_rgba(245,158,11,0.5)] transition-all"
+                >
+                  Buy $TULSA
+                </button>
+                <button
+                  onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                  className="glass px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all flex items-center gap-2"
+                >
+                  Join Telegram <ExternalLink className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-center space-x-6 mb-8">
-            <a href="https://x.com/tulsabws?s=21&t=O1kPMRtIBO1KZa0XZZiSsg" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">Twitter/X</a>
-            <a href="https://t.co/J9bOqE3Z8w" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">Telegram</a>
+
+          {/* Footer content */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex items-center gap-3">
+              <img src="/images/coin-logo.png" alt="$TULSA" className="h-12 w-12 rounded-full" />
+              <div>
+                <span className="text-xl font-bold gradient-text-gold">Black WallStreet Coin</span>
+                <p className="text-sm text-zinc-500">$TULSA</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-6">
+              <a 
+                href="https://x.com/tulsabws?s=21&t=O1kPMRtIBO1KZa0XZZiSsg" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-amber-500/20 transition-colors"
+              >
+                <Twitter className="h-5 w-5 text-amber-500" />
+              </a>
+              <a 
+                href="https://t.co/J9bOqE3Z8w" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-amber-500/20 transition-colors"
+              >
+                <svg className="h-5 w-5 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                </svg>
+              </a>
+            </div>
+            
+            <p className="text-zinc-500 text-sm">
+              © 2025 Black WallStreet Coin ($TULSA). All rights reserved.
+            </p>
           </div>
-          <p className="text-zinc-400">© 2025 Black WallStreet Coin ($TULSA). All rights reserved.</p>
         </div>
       </footer>
     </div>
