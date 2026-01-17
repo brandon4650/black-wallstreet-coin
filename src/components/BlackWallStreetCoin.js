@@ -1,26 +1,29 @@
 
-import React, { useState } from 'react';
-import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check, Sparkles } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 import HowToBuy from './HowToBuy';
 import PriceBanner from './PriceBanner';
-import InteractiveRoadmap from './InteractiveRoadmap';
+import EpicRoadmap from './EpicRoadmap';
 import Partnerships from './Partnerships';
 
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-800 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-800 text-white">
       <ParticleBackground />
       <PriceBanner />
       {/* Navigation */}
-      <nav className="fixed w-full bg-zinc-900/90 backdrop-blur-sm z-50">
+      <nav className="fixed w-full glass-dark z-50 border-b border-amber-500/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <Building2 className="h-8 w-8 text-amber-500" />
-              <span className="ml-2 text-xl font-bold">Black WallStreet Coin</span>
+            <div className="flex items-center group">
+              <div className="relative">
+                <Building2 className="h-8 w-8 text-amber-500 transition-transform group-hover:scale-110" />
+                <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <span className="ml-2 text-xl font-bold gradient-text-gold">Black WallStreet Coin</span>
             </div>
 
             {/* Desktop Navigation */}
@@ -33,9 +36,12 @@ const BlackWallStreetCoin = () => {
                 <a href="/chart" className="hover:text-amber-500 transition-colors">Live Chart</a>
                 <button
                   onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
-                  className="bg-amber-600 hover:bg-amber-700 px-6 py-2 rounded-full font-medium transition-colors"
+                  className="relative bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 px-6 py-2 rounded-full font-medium transition-all duration-300 hover-glow-gold overflow-hidden group"
                 >
-                  Join the Movement
+                  <span className="relative z-10 flex items-center gap-2">
+                    Join the Movement
+                    <Sparkles className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </span>
                 </button>
               </div>
             </div>
@@ -73,12 +79,15 @@ const BlackWallStreetCoin = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Rebuilding Black Wall Street in the <span className="text-amber-500">Digital Age</span>
+      <section className="pt-32 pb-20 px-4 relative">
+        {/* Background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+            Rebuilding Black Wall Street in the <span className="shimmer-text">Digital Age</span>
           </h1>
-          <p className="text-xl text-zinc-300 mb-8">
+          <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
             A groundbreaking cryptocurrency that honors the legacy of Black Wall Street while creating new paths to financial freedom and community prosperity.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
@@ -243,26 +252,38 @@ const BlackWallStreetCoin = () => {
       </section>
 
       {/* Tokenomics Section */}
-      <section id="tokenomics" className="py-20 px-4 bg-zinc-800/50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">$TULSA Tokenomics</h2>
+      <section id="tokenomics" className="py-20 px-4 bg-zinc-800/30 relative overflow-hidden">
+        {/* Background accent */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
+            <span className="shimmer-text">$TULSA</span> Tokenomics
+          </h2>
+          <p className="text-zinc-400 text-center mb-12 max-w-2xl mx-auto">
+            Built for long-term sustainability and community growth
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "Community Allocation", value: "40%", description: "Reserved for community development and initiatives" },
-              { title: "Development Fund", value: "30%", description: "Dedicated to platform development and expansion" },
-              { title: "Public Sale", value: "30%", description: "Available for public participation and liquidity" }
+              { title: "Community Allocation", value: "40%", description: "Reserved for community development and initiatives", color: "from-green-500 to-emerald-600" },
+              { title: "Development Fund", value: "30%", description: "Dedicated to platform development and expansion", color: "from-amber-500 to-orange-600" },
+              { title: "Public Sale", value: "30%", description: "Available for public participation and liquidity", color: "from-blue-500 to-indigo-600" }
             ].map((stat, index) => (
-              <div key={index} className="bg-zinc-800 p-8 rounded-xl text-center">
-                <h3 className="text-xl font-semibold mb-2">{stat.title}</h3>
-                <p className="text-3xl font-bold text-amber-500 mb-2">{stat.value}</p>
-                <p className="text-zinc-300">{stat.description}</p>
+              <div key={index} className="glass rounded-2xl p-8 text-center hover-lift hover-glow-gold group">
+                <h3 className="text-xl font-semibold mb-4 text-zinc-300">{stat.title}</h3>
+                <p className={`text-5xl font-bold mb-4 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                  {stat.value}
+                </p>
+                <p className="text-zinc-400">{stat.description}</p>
+                {/* Decorative element */}
+                <div className={`mt-6 h-1 w-16 mx-auto rounded-full bg-gradient-to-r ${stat.color} opacity-50 group-hover:opacity-100 group-hover:w-24 transition-all duration-300`} />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <InteractiveRoadmap />
+      <EpicRoadmap />
 
       {/* Footer */}
       <footer className="bg-zinc-900 py-12 px-4">

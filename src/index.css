@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   BLACK WALL STREET COIN - PREMIUM STYLES
+   ============================================ */
+
+/* Base scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(39, 39, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #fbbf24, #f59e0b);
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+/* Infinite scroll for gallery */
 @keyframes scroll {
   0% {
     transform: translateX(0);
@@ -16,7 +44,249 @@
   display: flex;
 }
 
-/* New animations for roadmap */
+/* Gold shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #fcd34d 25%,
+    #fef3c7 50%,
+    #fcd34d 75%,
+    #f59e0b 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Glow pulse effect */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4),
+                0 0 40px rgba(34, 197, 94, 0.2),
+                0 0 60px rgba(34, 197, 94, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.6),
+                0 0 60px rgba(34, 197, 94, 0.4),
+                0 0 90px rgba(34, 197, 94, 0.2);
+  }
+}
+
+.glow-pulse-green {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Amber glow pulse */
+@keyframes glow-pulse-amber {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4),
+                0 0 40px rgba(245, 158, 11, 0.2),
+                0 0 60px rgba(245, 158, 11, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.6),
+                0 0 60px rgba(245, 158, 11, 0.4),
+                0 0 90px rgba(245, 158, 11, 0.2);
+  }
+}
+
+.glow-pulse-amber {
+  animation: glow-pulse-amber 2s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Spin animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Particle flow along path */
+@keyframes particle-flow {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.particle-trail {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #fcd34d, #f59e0b);
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: particle-flow 4s linear infinite;
+}
+
+.particle-trail:nth-child(2) {
+  animation-delay: 0.8s;
+  width: 6px;
+  height: 6px;
+}
+
+.particle-trail:nth-child(3) {
+  animation-delay: 1.6s;
+  width: 10px;
+  height: 10px;
+}
+
+.particle-trail:nth-child(4) {
+  animation-delay: 2.4s;
+  width: 5px;
+  height: 5px;
+}
+
+.particle-trail:nth-child(5) {
+  animation-delay: 3.2s;
+  width: 7px;
+  height: 7px;
+}
+
+/* Gradient border animation */
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-border {
+  position: relative;
+  background: linear-gradient(135deg, rgba(39, 39, 42, 0.9), rgba(24, 24, 27, 0.9));
+  border-radius: 1rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    45deg,
+    #f59e0b,
+    #fcd34d,
+    #22c55e,
+    #fcd34d,
+    #f59e0b
+  );
+  background-size: 300% 300%;
+  border-radius: 1rem;
+  z-index: -1;
+  animation: gradient-rotate 4s ease infinite;
+}
+
+/* Scale up animation */
+@keyframes scale-up {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-up {
+  animation: scale-up 0.3s ease-out forwards;
+}
+
+/* Slide up animation */
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+/* Celebration burst */
+@keyframes celebration-burst {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.celebration-burst {
+  animation: celebration-burst 0.6s ease-out forwards;
+}
+
+/* Progress bar fill */
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+}
+
+.animate-progress-fill {
+  animation: progress-fill 1.5s ease-out forwards;
+}
+
+/* Arrow travel animation for roadmap */
 @keyframes arrowTravel {
   0% {
     transform: translateY(0) scale(1) rotate(90deg);
@@ -36,15 +306,237 @@
   animation: arrowTravel 1s ease-in-out;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+/* Roadmap line draw */
+@keyframes line-draw {
+  0% {
+    stroke-dashoffset: 1000;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+.animate-line-draw {
+  stroke-dasharray: 1000;
+  animation: line-draw 2s ease-out forwards;
+}
+
+/* Milestone pop */
+@keyframes milestone-pop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-milestone-pop {
+  animation: milestone-pop 0.4s ease-out forwards;
+}
+
+/* ============================================
+   GLASSMORPHISM UTILITIES
+   ============================================ */
+
+.glass {
+  background: rgba(39, 39, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(24, 24, 27, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-gold {
+  background: rgba(245, 158, 11, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* ============================================
+   GLOW EFFECTS
+   ============================================ */
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3),
+              0 0 40px rgba(245, 158, 11, 0.1);
+}
+
+.glow-gold-lg {
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.4),
+              0 0 60px rgba(245, 158, 11, 0.2),
+              0 0 90px rgba(245, 158, 11, 0.1);
+}
+
+.glow-green {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3),
+              0 0 40px rgba(34, 197, 94, 0.1);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.5),
+               0 0 40px rgba(245, 158, 11, 0.3);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 20px rgba(34, 197, 94, 0.5),
+               0 0 40px rgba(34, 197, 94, 0.3);
+}
+
+/* ============================================
+   GRADIENT TEXT
+   ============================================ */
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, #f59e0b 0%, #fcd34d 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-premium {
+  background: linear-gradient(135deg, #fef3c7 0%, #f59e0b 50%, #b45309 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================
+   ROADMAP SPECIFIC STYLES
+   ============================================ */
+
+.roadmap-container {
+  perspective: 1000px;
+}
+
+.roadmap-timeline {
+  transform-style: preserve-3d;
+}
+
+.milestone-node {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.milestone-node:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.milestone-node.completed {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+}
+
+.milestone-node.in-progress {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+}
+
+.milestone-node.pending {
+  background: linear-gradient(135deg, #52525b, #3f3f46);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.roadmap-connector {
+  position: relative;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    rgba(34, 197, 94, 0.8) var(--progress, 0%), 
+    rgba(82, 82, 91, 0.5) var(--progress, 0%)
+  );
+  border-radius: 2px;
+}
+
+.phase-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top center;
+}
+
+.phase-card.expanded {
+  transform: scale(1.02);
+}
+
+/* ============================================
+   HOVER EFFECTS
+   ============================================ */
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow-gold {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow-gold:hover {
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.4),
+              0 0 60px rgba(245, 158, 11, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .shimmer-text {
+    font-size: 2.5rem;
+  }
+  
+  .roadmap-container {
+    perspective: none;
+  }
+  
+  .milestone-node {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR FOR ROADMAP
+   ============================================ */
+
+.roadmap-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.roadmap-scroll::-webkit-scrollbar-track {
+  background: rgba(39, 39, 42, 0.3);
+  border-radius: 3px;
+}
+
+.roadmap-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #f59e0b, #22c55e);
+  border-radius: 3px;
+}
+
+/* ============================================
+   3D CARD EFFECT
+   ============================================ */
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.card-3d:hover {
+  transform: rotateX(2deg) rotateY(-2deg) translateZ(10px);
+}
+
+.card-3d-content {
+  transform: translateZ(20px);
 }
