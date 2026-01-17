@@ -34,6 +34,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -49,20 +50,19 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
 }
 
 .shimmer-text {
-  background: linear-gradient(
-    90deg,
-    #f59e0b 0%,
-    #fcd34d 25%,
-    #fef3c7 50%,
-    #fcd34d 75%,
-    #f59e0b 100%
-  );
+  background: linear-gradient(90deg,
+      #f59e0b 0%,
+      #fcd34d 25%,
+      #fef3c7 50%,
+      #fcd34d 75%,
+      #f59e0b 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -72,15 +72,18 @@
 
 /* Glow pulse effect */
 @keyframes glow-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(34, 197, 94, 0.4),
-                0 0 40px rgba(34, 197, 94, 0.2),
-                0 0 60px rgba(34, 197, 94, 0.1);
+      0 0 40px rgba(34, 197, 94, 0.2),
+      0 0 60px rgba(34, 197, 94, 0.1);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(34, 197, 94, 0.6),
-                0 0 60px rgba(34, 197, 94, 0.4),
-                0 0 90px rgba(34, 197, 94, 0.2);
+      0 0 60px rgba(34, 197, 94, 0.4),
+      0 0 90px rgba(34, 197, 94, 0.2);
   }
 }
 
@@ -90,15 +93,18 @@
 
 /* Amber glow pulse */
 @keyframes glow-pulse-amber {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.4),
-                0 0 40px rgba(245, 158, 11, 0.2),
-                0 0 60px rgba(245, 158, 11, 0.1);
+      0 0 40px rgba(245, 158, 11, 0.2),
+      0 0 60px rgba(245, 158, 11, 0.1);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(245, 158, 11, 0.6),
-                0 0 60px rgba(245, 158, 11, 0.4),
-                0 0 90px rgba(245, 158, 11, 0.2);
+      0 0 60px rgba(245, 158, 11, 0.4),
+      0 0 90px rgba(245, 158, 11, 0.2);
   }
 }
 
@@ -108,9 +114,12 @@
 
 /* Floating animation */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -125,6 +134,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -140,12 +150,15 @@
     left: 0%;
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     left: 100%;
     opacity: 0;
@@ -191,9 +204,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -209,14 +224,12 @@
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(
-    45deg,
-    #f59e0b,
-    #fcd34d,
-    #22c55e,
-    #fcd34d,
-    #f59e0b
-  );
+  background: linear-gradient(45deg,
+      #f59e0b,
+      #fcd34d,
+      #22c55e,
+      #fcd34d,
+      #f59e0b);
   background-size: 300% 300%;
   border-radius: 1rem;
   z-index: -1;
@@ -229,6 +242,7 @@
     transform: scale(0.95);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -245,6 +259,7 @@
     transform: translateY(20px);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
@@ -261,10 +276,12 @@
     transform: scale(0);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.5);
     opacity: 0.8;
   }
+
   100% {
     transform: scale(2);
     opacity: 0;
@@ -292,10 +309,12 @@
     transform: translateY(0) scale(1) rotate(90deg);
     opacity: 1;
   }
+
   50% {
     transform: translateY(50%) scale(1.2) rotate(90deg);
     opacity: 0.7;
   }
+
   100% {
     transform: translateY(100%) scale(1) rotate(90deg);
     opacity: 1;
@@ -311,6 +330,7 @@
   0% {
     stroke-dashoffset: 1000;
   }
+
   100% {
     stroke-dashoffset: 0;
   }
@@ -326,9 +346,11 @@
   0% {
     transform: scale(0);
   }
+
   70% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
@@ -369,28 +391,28 @@
 
 .glow-gold {
   box-shadow: 0 0 20px rgba(245, 158, 11, 0.3),
-              0 0 40px rgba(245, 158, 11, 0.1);
+    0 0 40px rgba(245, 158, 11, 0.1);
 }
 
 .glow-gold-lg {
   box-shadow: 0 0 30px rgba(245, 158, 11, 0.4),
-              0 0 60px rgba(245, 158, 11, 0.2),
-              0 0 90px rgba(245, 158, 11, 0.1);
+    0 0 60px rgba(245, 158, 11, 0.2),
+    0 0 90px rgba(245, 158, 11, 0.1);
 }
 
 .glow-green {
   box-shadow: 0 0 20px rgba(34, 197, 94, 0.3),
-              0 0 40px rgba(34, 197, 94, 0.1);
+    0 0 40px rgba(34, 197, 94, 0.1);
 }
 
 .text-glow-gold {
   text-shadow: 0 0 20px rgba(245, 158, 11, 0.5),
-               0 0 40px rgba(245, 158, 11, 0.3);
+    0 0 40px rgba(245, 158, 11, 0.3);
 }
 
 .text-glow-green {
   text-shadow: 0 0 20px rgba(34, 197, 94, 0.5),
-               0 0 40px rgba(34, 197, 94, 0.3);
+    0 0 40px rgba(34, 197, 94, 0.3);
 }
 
 /* ============================================
@@ -449,10 +471,9 @@
 .roadmap-connector {
   position: relative;
   height: 4px;
-  background: linear-gradient(90deg, 
-    rgba(34, 197, 94, 0.8) var(--progress, 0%), 
-    rgba(82, 82, 91, 0.5) var(--progress, 0%)
-  );
+  background: linear-gradient(90deg,
+      rgba(34, 197, 94, 0.8) var(--progress, 0%),
+      rgba(82, 82, 91, 0.5) var(--progress, 0%));
   border-radius: 2px;
 }
 
@@ -484,25 +505,194 @@
 
 .hover-glow-gold:hover {
   box-shadow: 0 0 30px rgba(245, 158, 11, 0.4),
-              0 0 60px rgba(245, 158, 11, 0.2);
+    0 0 60px rgba(245, 158, 11, 0.2);
 }
 
 /* ============================================
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
+/* Prevent horizontal overflow on all screens */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+  .shimmer-text {
+    font-size: 3rem;
+  }
+}
+
+/* Tablets */
 @media (max-width: 768px) {
   .shimmer-text {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
-  
+
   .roadmap-container {
     perspective: none;
   }
-  
+
   .milestone-node {
     width: 50px;
     height: 50px;
+  }
+
+  /* Reduce section padding on mobile */
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Smaller glass cards for mobile */
+  .glass,
+  .glass-dark {
+    padding: 1rem;
+  }
+
+  /* Touch-friendly buttons */
+  button {
+    min-height: 44px;
+  }
+
+  /* Reduce blur intensity on mobile for performance */
+  .glass {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Smaller glow effects on mobile for performance */
+  .glow-gold-lg {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+  }
+
+  .glow-pulse-amber,
+  .glow-pulse-green {
+    animation: none;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .shimmer-text {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  /* Even smaller milestone nodes */
+  .milestone-node {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Smaller fonts for mobile headings */
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Ensure content doesn't overflow */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl,
+  .max-w-2xl,
+  .max-w-xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 100% !important;
+  }
+
+  /* Reduce animation intensity on mobile */
+  .animate-float {
+    animation-duration: 6s;
+  }
+
+  /* Hide decorative elements on mobile */
+  .particle-trail {
+    display: none;
+  }
+
+  /* Stack flex items vertically on mobile */
+  .flex-wrap {
+    flex-direction: column;
+  }
+
+  /* Full-width buttons on mobile */
+  .flex-wrap button,
+  .flex-wrap a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile-specific roadmap fixes */
+@media (max-width: 640px) {
+
+  /* Hide timeline connecting line on mobile */
+  .roadmap-scroll .absolute.left-16 {
+    display: none;
+  }
+
+  /* Vertical roadmap layout on mobile */
+  .roadmap-scroll {
+    flex-direction: column;
+    gap: 1rem;
+    overflow-x: visible;
+    padding: 0;
+  }
+
+  /* Milestone labels positioning */
+  .milestone-node span {
+    position: relative;
+    bottom: auto;
+    margin-top: 0.5rem;
+  }
+
+  /* Phase detail card mobile adjustments */
+  .phase-card {
+    padding: 1rem;
+  }
+
+  /* Smaller progress indicators */
+  .text-6xl {
+    font-size: 2.5rem;
+  }
+}
+
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  nav {
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
   }
 }
 

@@ -138,8 +138,8 @@ const MilestoneNode = ({ phase, isActive, status, onClick, index }) => {
     <button
       onClick={onClick}
       className={`
-        relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full
-        transition-all duration-300 cursor-pointer z-10
+        relative flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full
+        transition-all duration-300 cursor-pointer z-10 flex-shrink-0
         ${statusClasses[status]}
         ${isActive ? 'ring-4 ring-amber-500/50 scale-110' : 'hover:scale-105'}
       `}
@@ -148,17 +148,17 @@ const MilestoneNode = ({ phase, isActive, status, onClick, index }) => {
       {/* Inner content */}
       <div className="text-white">
         {status === STATUS.COMPLETE ? (
-          <Check className="h-8 w-8" />
+          <Check className="h-5 w-5 sm:h-8 sm:w-8" />
         ) : status === STATUS.IN_PROGRESS ? (
-          <Loader2 className="h-8 w-8 animate-spin" />
+          <Loader2 className="h-5 w-5 sm:h-8 sm:w-8 animate-spin" />
         ) : (
-          <span className="text-lg font-bold">{index + 1}</span>
+          <span className="text-sm sm:text-lg font-bold">{index + 1}</span>
         )}
       </div>
       
       {/* Phase label below */}
       <span className={`
-        absolute -bottom-8 text-xs font-medium whitespace-nowrap
+        absolute -bottom-6 sm:-bottom-8 text-[10px] sm:text-xs font-medium whitespace-nowrap
         ${status === STATUS.COMPLETE ? 'text-green-400' : 
           status === STATUS.IN_PROGRESS ? 'text-amber-400' : 'text-zinc-500'}
       `}>
@@ -215,7 +215,23 @@ const PhaseDetailCard = ({ data, isVisible }) => {
             </div>
           </div>
           
-          {/* Progress indicator */}
+          {/* Progress indicator - show on mobile inline */}
+          <div className="flex md:hidden items-center gap-2 mt-2">
+            <div className="flex-1 h-2 bg-zinc-800 rounded-full overflow-hidden">
+              <div 
+                className="h-full rounded-full"
+                style={{ 
+                  width: `${progress}%`,
+                  background: progress === 100 
+                    ? 'linear-gradient(90deg, #22c55e, #16a34a)' 
+                    : 'linear-gradient(90deg, #f59e0b, #d97706)'
+                }}
+              />
+            </div>
+            <span className="text-sm font-bold text-amber-500">{Math.round(progress)}%</span>
+          </div>
+          
+          {/* Progress indicator - desktop */}
           <div className="hidden md:flex flex-col items-end">
             <span className="text-3xl font-bold text-amber-500">{Math.round(progress)}%</span>
             <span className="text-sm text-zinc-500">Complete</span>
@@ -346,11 +362,11 @@ const EpicRoadmap = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4">
             <span className="shimmer-text">Project Roadmap</span>
           </h2>
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto mb-6 sm:mb-8 px-4">
             Our journey to rebuild Black Wall Street in the digital age
           </p>
 
@@ -407,11 +423,11 @@ const EpicRoadmap = () => {
             <ChevronRight className="h-6 w-6 text-amber-500" />
           </button>
 
-          {/* Timeline with milestones */}
-          <div className="px-12 md:px-16 overflow-hidden">
+          {/* Timeline with milestones - horizontal scroll on all screens */}
+          <div className="px-8 sm:px-12 md:px-16 overflow-hidden">
             <div 
               ref={timelineRef}
-              className="flex items-center justify-between gap-4 md:gap-8 py-12 roadmap-scroll overflow-x-auto scrollbar-hide"
+              className="flex items-center gap-3 sm:gap-4 md:gap-8 py-10 sm:py-12 overflow-x-auto scrollbar-hide pb-8"
               style={{ scrollBehavior: 'smooth' }}
             >
               {/* Connecting Line */}
