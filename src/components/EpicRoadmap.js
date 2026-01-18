@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
     Code, Shield, Globe, Users, Rocket, Lock, BarChart, Search, 
     MessageCircle, TrendingUp, DollarSign, ArrowRightLeft, Coins, 
@@ -7,6 +7,7 @@ import {
     Network, Building, Boxes, Loader2, ChevronRight, ChevronLeft,
     Sparkles, Zap, Crown
 } from 'lucide-react';
+import RoadmapAdminPanel from './RoadmapAdminPanel';
 
 // Status types
 const STATUS = {
@@ -307,13 +308,77 @@ const TimelineParticle = ({ delay }) => (
 const EpicRoadmap = () => {
   const [activePhase, setActivePhase] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [currentRoadmapData, setCurrentRoadmapData] = useState(roadmapData);
   const timelineRef = useRef(null);
 
+  // Load roadmap data from localStorage on mount
+  useEffect(() => {
+    const savedData = localStorage.getItem('bws_roadmap_data');
+    if (savedData) {
+      try {
+        const parsed = JSON.parse(savedData);
+        // Restore the data structure (icons can't be serialized)
+        const restored = parsed.map((phase, idx) => ({
+          ...phase,
+          icon: roadmapData[idx]?.icon || <Code className="h-6 w-6" />,
+          items: phase.items.map((item, itemIdx) => ({
+            ...item,
+            icon: roadmapData[idx]?.items[itemIdx]?.icon || <CheckCircle className="h-5 w-5" />
+          }))
+        }));
+        setCurrentRoadmapData(restored);
+      } catch (e) {
+        console.error('Failed to parse saved roadmap data:', e);
+      }
+    }
+  }, []);
+
+  // Keyboard listener for Shift+Enter to open admin panel
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.shiftKey && e.key === 'Enter') {
+        e.preventDefault();
+        setIsAdminOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Save roadmap data to localStorage
+  const handleSaveRoadmap = useCallback((newData) => {
+    // Create a serializable version (without React icons)
+    const serializableData = newData.map(phase => ({
+      phase: phase.phase,
+      title: phase.title,
+      subtitle: phase.subtitle,
+      items: phase.items.map(item => ({
+        text: item.text,
+        status: item.status
+      }))
+    }));
+    
+    localStorage.setItem('bws_roadmap_data', JSON.stringify(serializableData));
+    
+    // Update state with icons restored
+    const restored = newData.map((phase, idx) => ({
+      ...phase,
+      icon: roadmapData[idx]?.icon || <Code className="h-6 w-6" />,
+      items: phase.items.map((item, itemIdx) => ({
+        ...item,
+        icon: roadmapData[idx]?.items[itemIdx]?.icon || <CheckCircle className="h-5 w-5" />
+      }))
+    }));
+    setCurrentRoadmapData(restored);
+  }, []);
+
   // Calculate overall progress
-  const totalItems = roadmapData.reduce((acc, phase) => acc + phase.items.length, 0);
-  const completedItems = roadmapData.reduce((acc, phase) => 
+  const totalItems = currentRoadmapData.reduce((acc, phase) => acc + phase.items.length, 0);
+  const completedItems = currentRoadmapData.reduce((acc, phase) => 
     acc + phase.items.filter(item => item.status === STATUS.COMPLETE).length, 0);
-  const overallProgress = Math.round((completedItems / totalItems) * 100);
+  const overallProgress = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -339,16 +404,14 @@ const EpicRoadmap = () => {
   };
 
   const navigateNext = () => {
-    setActivePhase(prev => Math.min(roadmapData.length - 1, prev + 1));
+    setActivePhase(prev => Math.min(currentRoadmapData.length - 1, prev + 1));
   };
 
   // Scroll timeline to active phase
   useEffect(() => {
-    if (timelineRef.current) {
+    if (timelineRef.current && timelineRef.current.children[activePhase]) {
       const node = timelineRef.current.children[activePhase];
-      if (node) {
-        node.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
+      node.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }, [activePhase]);
 
@@ -413,11 +476,11 @@ const EpicRoadmap = () => {
           
           <button 
             onClick={navigateNext}
-            disabled={activePhase === roadmapData.length - 1}
+            disabled={activePhase === currentRoadmapData.length - 1}
             className={`
               absolute right-0 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full
               glass transition-all duration-300
-              ${activePhase === roadmapData.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-amber-500/20 hover:glow-gold'}
+              ${activePhase === currentRoadmapData.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-amber-500/20 hover:glow-gold'}
             `}
           >
             <ChevronRight className="h-6 w-6 text-amber-500" />
@@ -438,7 +501,7 @@ const EpicRoadmap = () => {
                 <div 
                   className="absolute left-0 top-0 h-full rounded-full transition-all duration-1000"
                   style={{ 
-                    width: isVisible ? `${(activePhase / (roadmapData.length - 1)) * 100}%` : '0%',
+                    width: isVisible ? `${(activePhase / (currentRoadmapData.length - 1)) * 100}%` : '0%',
                     background: 'linear-gradient(90deg, #22c55e, #f59e0b)'
                   }}
                 />
@@ -453,7 +516,7 @@ const EpicRoadmap = () => {
               </div>
 
               {/* Milestone nodes */}
-              {roadmapData.map((phase, index) => (
+              {currentRoadmapData.map((phase, index) => (
                 <MilestoneNode
                   key={index}
                   phase={phase.phase}
@@ -469,13 +532,13 @@ const EpicRoadmap = () => {
 
         {/* Phase Detail Card */}
         <PhaseDetailCard 
-          data={roadmapData[activePhase]} 
+          data={currentRoadmapData[activePhase]} 
           isVisible={isVisible}
         />
 
         {/* Phase navigation dots (mobile) */}
         <div className="flex justify-center gap-2 mt-8 md:hidden">
-          {roadmapData.map((_, index) => (
+          {currentRoadmapData.map((_, index) => (
             <button
               key={index}
               onClick={() => setActivePhase(index)}
@@ -489,6 +552,14 @@ const EpicRoadmap = () => {
           ))}
         </div>
       </div>
+
+      {/* Admin Panel */}
+      <RoadmapAdminPanel
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        roadmapData={currentRoadmapData}
+        onSave={handleSaveRoadmap}
+      />
     </section>
   );
 };
