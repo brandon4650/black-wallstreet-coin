@@ -6,6 +6,7 @@ import HowToBuy from './HowToBuy';
 import PriceBanner from './PriceBanner';
 import EpicRoadmap from './EpicRoadmap';
 import Partnerships from './Partnerships';
+import BackgroundMusic from './BackgroundMusic';
 
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +31,7 @@ const BlackWallStreetCoin = () => {
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <ParticleBackground />
       <PriceBanner />
+      <BackgroundMusic />
       
       {/* Premium Navigation */}
       <nav className="fixed w-full z-50 transition-all duration-300" style={{
@@ -156,9 +158,9 @@ const BlackWallStreetCoin = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Side - Text */}
-          <div className="text-center lg:text-left">
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass-gold mb-4 sm:mb-6">
               <Star className="h-4 w-4 text-amber-500" />
               <span className="text-xs sm:text-sm text-amber-400">Honoring History • Building the Future</span>
@@ -178,7 +180,7 @@ const BlackWallStreetCoin = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8 w-full">
               <button
                 onClick={() => window.open('https://pump.fun/coin/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump', '_blank')}
                 className="w-full sm:w-auto group relative overflow-hidden bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-[0_0_40px_rgba(245,158,11,0.6)]"
@@ -217,13 +219,6 @@ const BlackWallStreetCoin = () => {
                 </button>
               </div>
             </div>
-
-            {/* DEX PAID Badge */}
-            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30">
-              <Check className="h-5 w-5 text-green-500" />
-              <span className="text-green-400 font-semibold">DEX PAID</span>
-              <Sparkles className="h-4 w-4 text-green-500 animate-pulse" />
-            </div>
           </div>
 
           {/* Right Side - 3D Coin (Visible on all screens) */}
@@ -256,8 +251,17 @@ const BlackWallStreetCoin = () => {
         </div>
       </section>
 
+      {/* DEX PAID Badge - Below scroll indicator */}
+      <div className="relative z-10 flex justify-center py-4 sm:py-0 sm:-mt-16">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30">
+          <Check className="h-5 w-5 text-green-500" />
+          <span className="text-green-400 font-semibold">DEX PAID</span>
+          <Sparkles className="h-4 w-4 text-green-500 animate-pulse" />
+        </div>
+      </div>
+
       {/* Stats Bar */}
-      <section className="relative z-10 -mt-10 sm:-mt-20 mb-12 sm:mb-20">
+      <section className="relative z-10 mt-4 sm:mt-4 mb-12 sm:mb-20">
         <div className="max-w-5xl mx-auto px-4">
           <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 border border-amber-500/10">
             {[
