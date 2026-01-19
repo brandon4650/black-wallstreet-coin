@@ -28,7 +28,7 @@ const BlackWallStreetCoin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden w-full max-w-full">
       <ParticleBackground />
       <PriceBanner />
       <BackgroundMusic />
@@ -158,7 +158,7 @@ const BlackWallStreetCoin = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center justify-center">
           {/* Left Side - Text */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass-gold mb-4 sm:mb-6">
@@ -198,7 +198,8 @@ const BlackWallStreetCoin = () => {
             </div>
 
             {/* Contract Address */}
-            <div className="glass rounded-2xl p-4 max-w-lg mx-auto lg:mx-0">
+            <div className="w-full flex justify-center lg:justify-start">
+              <div className="glass rounded-2xl p-4 max-w-lg w-full sm:w-auto">
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <p className="text-xs text-amber-500 font-medium mb-1">Contract Address (CA)</p>
@@ -218,6 +219,7 @@ const BlackWallStreetCoin = () => {
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
               </div>
+            </div>
             </div>
           </div>
 

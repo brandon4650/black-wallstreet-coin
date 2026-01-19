@@ -67,48 +67,48 @@ const PriceBanner = () => {
   }, []);
 
   return (
-    <div className="glass-dark py-2 w-full border-b border-amber-500/10 relative overflow-hidden">
+    <div className="glass-dark py-1.5 sm:py-2 w-full border-b border-amber-500/10 relative overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-green-500/5 animate-pulse" />
       
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 overflow-hidden relative z-10">
-        <div className="flex items-center space-x-6 md:space-x-8 overflow-x-auto scrollbar-hide">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-2 sm:px-4 overflow-hidden relative z-10">
+        <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 overflow-x-auto scrollbar-hide whitespace-nowrap">
           {/* Live indicator */}
-          <div className="flex items-center gap-2 text-green-500">
-            <Activity className="h-4 w-4 animate-pulse" />
-            <span className="text-xs font-medium hidden sm:inline">LIVE</span>
+          <div className="flex items-center gap-1 text-green-500">
+            <Activity className="h-3 w-3 sm:h-4 sm:w-4 animate-pulse" />
+            <span className="text-[10px] sm:text-xs font-medium">LIVE</span>
           </div>
           
           {/* Price */}
-          <div className="flex items-center gap-2">
-            <span className="text-zinc-400 text-sm">$TULSA:</span>
-            <span className={`font-mono font-semibold text-amber-500 ${isLoading ? 'animate-pulse' : ''}`}>
+          <div className="flex items-center gap-1">
+            <span className="text-zinc-400 text-[10px] sm:text-sm">$TULSA:</span>
+            <span className={`font-mono font-semibold text-amber-500 text-[10px] sm:text-sm ${isLoading ? 'animate-pulse' : ''}`}>
               ${formatNumber(tokenData.price)}
             </span>
           </div>
           
           {/* 24h Change */}
-          <div className="flex items-center gap-2">
-            <span className="text-zinc-400 text-sm hidden sm:inline">24h:</span>
-            <div className={`flex items-center gap-1 ${tokenData.priceChange24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          <div className="flex items-center gap-1">
+            <span className="text-zinc-400 text-[10px] sm:text-sm">24h:</span>
+            <div className={`flex items-center gap-0.5 ${tokenData.priceChange24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
               {tokenData.priceChange24h >= 0 ? 
-                <TrendingUp className="h-4 w-4" /> : 
-                <TrendingDown className="h-4 w-4" />
+                <TrendingUp className="h-2.5 w-2.5 sm:h-4 sm:w-4" /> : 
+                <TrendingDown className="h-2.5 w-2.5 sm:h-4 sm:w-4" />
               }
-              <span className="font-semibold">{tokenData.priceChange24h}%</span>
+              <span className="font-semibold text-[10px] sm:text-sm">{tokenData.priceChange24h}%</span>
             </div>
           </div>
           
           {/* Market Cap */}
-          <div className="hidden md:flex items-center gap-2">
-            <span className="text-zinc-400 text-sm">MCap:</span>
-            <span className="font-mono text-zinc-200">${formatNumber(tokenData.marketCap)}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-zinc-400 text-[10px] sm:text-sm">MC:</span>
+            <span className="font-mono text-zinc-200 text-[10px] sm:text-sm">${formatNumber(tokenData.marketCap)}</span>
           </div>
           
           {/* Volume */}
-          <div className="hidden lg:flex items-center gap-2">
-            <span className="text-zinc-400 text-sm">Vol:</span>
-            <span className="font-mono text-zinc-200">${formatNumber(tokenData.volume24h)}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-zinc-400 text-[10px] sm:text-sm">Vol:</span>
+            <span className="font-mono text-zinc-200 text-[10px] sm:text-sm">${formatNumber(tokenData.volume24h)}</span>
           </div>
         </div>
         
