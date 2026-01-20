@@ -398,17 +398,30 @@ const EpicRoadmap = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Track if user has interacted with phase selection (to prevent initial auto-scroll)
+  const hasUserInteractedRef = useRef(false);
+
   // Navigation handlers
   const navigatePrev = () => {
+    hasUserInteractedRef.current = true;
     setActivePhase(prev => Math.max(0, prev - 1));
   };
 
   const navigateNext = () => {
+    hasUserInteractedRef.current = true;
     setActivePhase(prev => Math.min(currentRoadmapData.length - 1, prev + 1));
   };
 
-  // Scroll timeline to active phase
+  // Handle phase click from milestone node
+  const handlePhaseClick = (index) => {
+    hasUserInteractedRef.current = true;
+    setActivePhase(index);
+  };
+
+  // Scroll timeline to active phase only when user clicks a phase
   useEffect(() => {
+    if (!hasUserInteractedRef.current) return; // Skip auto-scroll on initial load
+    
     if (timelineRef.current && timelineRef.current.children[activePhase]) {
       const node = timelineRef.current.children[activePhase];
       node.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
@@ -523,7 +536,7 @@ const EpicRoadmap = () => {
                   index={index}
                   isActive={index === activePhase}
                   status={getPhaseStatus(phase.items)}
-                  onClick={() => setActivePhase(index)}
+                  onClick={() => handlePhaseClick(index)}
                 />
               ))}
             </div>
@@ -541,7 +554,7 @@ const EpicRoadmap = () => {
           {currentRoadmapData.map((_, index) => (
             <button
               key={index}
-              onClick={() => setActivePhase(index)}
+              onClick={() => handlePhaseClick(index)}
               className={`
                 w-2 h-2 rounded-full transition-all duration-300
                 ${index === activePhase 
