@@ -1,18 +1,65 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check, Sparkles, ExternalLink, Copy, Star, Zap, TrendingUp, Rocket, Twitter } from 'lucide-react';
+import axios from 'axios';
 import ParticleBackground from './ParticleBackground';
 import HowToBuy from './HowToBuy';
 import PriceBanner from './PriceBanner';
 import EpicRoadmap from './EpicRoadmap';
 import Partnerships from './Partnerships';
 import BackgroundMusic from './BackgroundMusic';
+import MilestoneAnnouncement from './MilestoneAnnouncement';
 
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const heroRef = useRef(null);
+  
+  const [tokenData, setTokenData] = useState({
+    price: 0,
+    priceChange24h: 0,
+    priceChange1h: 0,
+    priceChange5m: 0,
+    volume24h: 0,
+    marketCap: 0,
+    liquidity: 0,
+    buys24h: 0,
+    sells24h: 0
+  });
+
+  // Token data fetching logic
+  useEffect(() => {
+    const fetchTokenData = async () => {
+      try {
+        const response = await axios.get(
+          'https://api.dexscreener.com/latest/dex/tokens/8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump'
+        );
+
+        const pairs = response.data.pairs || [];
+        if (pairs.length > 0) {
+          const mainPair = pairs[0];
+          setTokenData({
+            price: mainPair.priceUsd,
+            priceChange24h: mainPair.priceChange?.h24 || 0,
+            priceChange1h: mainPair.priceChange?.h1 || 0,
+            priceChange5m: mainPair.priceChange?.m5 || 0,
+            volume24h: mainPair.volume?.h24 || 0,
+            marketCap: mainPair.fdv || mainPair.marketCap || 0,
+            liquidity: mainPair.liquidity?.usd || 0,
+            buys24h: mainPair.txns?.h24?.buys || 0,
+            sells24h: mainPair.txns?.h24?.sells || 0
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching token data:', error);
+      }
+    };
+
+    fetchTokenData();
+    const interval = setInterval(fetchTokenData, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Parallax effect
   useEffect(() => {
@@ -30,8 +77,9 @@ const BlackWallStreetCoin = () => {
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden w-full max-w-full">
       <ParticleBackground />
-      <PriceBanner />
+      <PriceBanner tokenData={tokenData} />
       <BackgroundMusic />
+      <MilestoneAnnouncement marketCap={tokenData.marketCap} />
       
       {/* Premium Navigation */}
       <nav className="fixed w-full z-50 transition-all duration-300" style={{

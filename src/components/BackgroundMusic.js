@@ -122,6 +122,35 @@ const BackgroundMusic = () => {
     }
   };
 
+  const hasAutoPlayedRef = useRef(false);
+
+  // Global Interaction Listener for Autoplay
+  useEffect(() => {
+    const handleInteraction = () => {
+      if (!hasAutoPlayedRef.current && playerRef.current && playerReady) {
+        playerRef.current.playVideo();
+        hasAutoPlayedRef.current = true;
+        
+        // Remove listeners immediately
+        window.removeEventListener('click', handleInteraction);
+        window.removeEventListener('scroll', handleInteraction);
+        window.removeEventListener('touchstart', handleInteraction);
+      }
+    };
+
+    if (!hasAutoPlayedRef.current) {
+      window.addEventListener('click', handleInteraction);
+      window.addEventListener('scroll', handleInteraction);
+      window.addEventListener('touchstart', handleInteraction);
+    }
+
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('scroll', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+    };
+  }, [playerReady]);
+
   const togglePlay = () => {
     if (!playerRef.current || !playerReady) return;
 
