@@ -35,8 +35,8 @@ const MilestoneAnnouncement = ({ marketCap }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-[0_0_50px_rgba(245,158,11,0.3)] border border-amber-500/20 bg-zinc-900 animate-scale-up">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-2xl max-h-[95vh] overflow-y-auto sm:overflow-hidden rounded-3xl shadow-[0_0_50px_rgba(245,158,11,0.3)] border border-amber-500/20 bg-zinc-900 animate-scale-up">
         
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0 text-white">
@@ -57,22 +57,22 @@ const MilestoneAnnouncement = ({ marketCap }) => {
         </button>
 
         {/* Content */}
-        <div className="relative z-10 p-6 sm:p-10">
-          <div className="text-center mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-gold text-amber-400 text-sm font-bold mb-4 animate-bounce">
-              <img src="/images/icon-tracker.png" alt="Live Tracker" className="h-5 w-5 object-contain" />
+        <div className="relative z-10 p-5 sm:p-10">
+          <div className="text-center mb-4 sm:mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-gold text-amber-400 text-[10px] sm:text-sm font-bold mb-3 sm:mb-4 animate-bounce">
+              <img src="/images/icon-tracker.png" alt="Live Tracker" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
               LIVE GIVEAWAY TRACKER
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight">
+            <h2 className="text-2xl sm:text-5xl font-black text-white leading-tight">
               Community <span className="shimmer-text">GIVEAWAYS</span>
             </h2>
-            <div className="flex items-center justify-center gap-2 mt-2">
-              <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest">Current Market Cap:</span>
-              <span className="text-amber-500 font-mono font-bold">${formatCurrency(currentMc)}</span>
+            <div className="flex items-center justify-center gap-2 mt-1 sm:mt-2">
+              <span className="text-zinc-500 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Current Market Cap:</span>
+              <span className="text-amber-500 font-mono font-bold text-sm sm:text-base">${formatCurrency(currentMc)}</span>
             </div>
           </div>
 
-          <div className="grid gap-4">
+          <div className="grid gap-2 sm:gap-4">
             {milestones.map((item, index) => {
               const progress = Math.min(Math.max((currentMc / item.mc) * 100, 0), 100);
               const isReached = currentMc >= item.mc;
@@ -81,11 +81,11 @@ const MilestoneAnnouncement = ({ marketCap }) => {
               return (
                 <div 
                   key={index}
-                  className="group relative p-4 sm:p-5 rounded-2xl glass-dark border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300 overflow-hidden"
+                  className="group relative p-3 sm:p-5 rounded-2xl glass-dark border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300 overflow-hidden"
                 >
                   <div className="flex items-center justify-between mb-3 relative z-10">
                     <div className="flex items-center gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-amber-500/5 flex items-center justify-center border border-amber-500/10 group-hover:scale-110 transition-transform">
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-amber-500/5 flex items-center justify-center border border-amber-500/10 group-hover:scale-110 transition-transform">
                         <img 
                           src={item.icon} 
                           alt={`${item.label} milestone`} 
@@ -93,10 +93,10 @@ const MilestoneAnnouncement = ({ marketCap }) => {
                         />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-white leading-none">
+                        <h3 className="text-base sm:text-lg font-bold text-white leading-none">
                           {item.label} Market Cap
                         </h3>
-                        <p className="text-amber-500/70 text-[10px] font-bold mt-1 uppercase tracking-widest">
+                        <p className="text-amber-500/70 text-[9px] sm:text-[10px] font-bold mt-1 uppercase tracking-widest">
                           Reward: {item.reward}
                         </p>
                       </div>
@@ -135,7 +135,7 @@ const MilestoneAnnouncement = ({ marketCap }) => {
 
           <button
             onClick={handleClose}
-            className="w-full mt-6 py-4 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 font-bold text-lg text-white transition-all shadow-lg shadow-amber-900/20 active:scale-95"
+            className="w-full mt-4 sm:mt-6 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 font-bold text-base sm:text-lg text-white transition-all shadow-lg shadow-amber-900/20 active:scale-95"
           >
             LET'S PUMP!
           </button>

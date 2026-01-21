@@ -287,8 +287,12 @@ const BlackWallStreetCoin = () => {
               
               {/* Orbiting elements - hidden on small mobile */}
               <div className="hidden sm:block absolute inset-0 animate-spin" style={{ animationDuration: '20s' }}>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8">
-                  <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-amber-500" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12">
+                  <img 
+                    src="/images/icon-fist.png" 
+                    alt="Strength" 
+                    className="h-16 w-16 sm:h-20 sm:w-20 object-contain drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]" 
+                  />
                 </div>
               </div>
             </div>
