@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { X, Trophy, Sparkles, Rocket, Gift, ChevronRight, TrendingUp } from 'lucide-react';
+import { X, Trophy, Sparkles, Rocket, Gift, ChevronRight, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const MilestoneAnnouncement = ({ marketCap }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [lockedMilestones, setLockedMilestones] = useState(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('bws_locked_milestones') || '[]');
+      // Seed 1M as already reached if not present
+      if (!stored.includes('1M')) {
+        stored.push('1M');
+        localStorage.setItem('bws_locked_milestones', JSON.stringify(stored));
+      }
+      return stored;
+    } catch (e) {
+      return ['1M'];
+    }
+  });
 
   const milestones = [
     { mc: 1000000, label: "1M", reward: "$10,000", icon: "/images/icon-1m.png" },
@@ -18,6 +32,25 @@ const MilestoneAnnouncement = ({ marketCap }) => {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Check for new milestones to lock
+    const currentMc = marketCap || 0;
+    const newlyLocked = [...lockedMilestones];
+    let changed = false;
+
+    milestones.forEach(m => {
+      if (currentMc >= m.mc && !newlyLocked.includes(m.label)) {
+        newlyLocked.push(m.label);
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      setLockedMilestones(newlyLocked);
+      localStorage.setItem('bws_locked_milestones', JSON.stringify(newlyLocked));
+    }
+  }, [marketCap, lockedMilestones]);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -74,14 +107,16 @@ const MilestoneAnnouncement = ({ marketCap }) => {
 
           <div className="grid gap-2 sm:gap-4">
             {milestones.map((item, index) => {
-              const progress = Math.min(Math.max((currentMc / item.mc) * 100, 0), 100);
-              const isReached = currentMc >= item.mc;
+              const liveProgress = Math.min(Math.max((currentMc / item.mc) * 100, 0), 100);
+              const isLocked = lockedMilestones.includes(item.label);
+              const isReached = currentMc >= item.mc || isLocked;
+              const progress = isReached ? 100 : liveProgress;
               const remaining = item.mc - currentMc;
 
               return (
                 <div 
                   key={index}
-                  className="group relative p-3 sm:p-5 rounded-2xl glass-dark border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300 overflow-hidden"
+                  className={`group relative p-3 sm:p-5 rounded-2xl glass-dark border transition-all duration-300 overflow-hidden ${isReached ? 'border-green-500/30' : 'border-amber-500/10 hover:border-amber-500/30'}`}
                 >
                   <div className="flex items-center justify-between mb-3 relative z-10">
                     <div className="flex items-center gap-4">
@@ -101,17 +136,34 @@ const MilestoneAnnouncement = ({ marketCap }) => {
                         </p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className={`text-sm font-black ${isReached ? 'text-green-500' : 'text-zinc-400'}`}>
-                        {progress.toFixed(1)}%
-                      </div>
+                    <div className="text-right flex items-center gap-3">
+                      {isReached ? (
+                        <div className="flex items-center gap-2">
+                          <Link 
+                            to="/giveaway" 
+                            className="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-400 text-[10px] sm:text-xs font-black hover:bg-amber-500/30 transition-all border border-amber-500/30 animate-pulse"
+                          >
+                            ENTER GIVEAWAY
+                          </Link>
+                          <div className="relative animate-wiggle flex items-center justify-center">
+                            <span className="shimmer-text text-2xl font-black drop-shadow-[0_0_12px_rgba(245,158,11,0.6)] select-none">
+                              ✔
+                            </span>
+                            <div className="absolute inset-x-0 h-px bg-white/20 blur-sm -skew-x-12 opacity-50" />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-sm font-black text-zinc-400">
+                          {progress.toFixed(1)}%
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Progress Bar Container */}
                   <div className="relative h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5">
                     <div 
-                      className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-out rounded-full ${isReached ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-gradient-to-r from-amber-600 to-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.3)]'}`}
+                      className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-out rounded-full ${isReached ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]' : 'bg-gradient-to-r from-amber-600 to-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.3)]'}`}
                       style={{ width: `${progress}%` }}
                     />
                   </div>

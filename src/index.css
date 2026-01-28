@@ -325,6 +325,55 @@
   animation: progress-fill 1.5s ease-out forwards;
 }
 
+/* Wiggle animation for checkmark */
+@keyframes wiggle {
+
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+/* Shiny sweep animation */
+@keyframes shiny-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-20deg);
+  }
+
+  50%,
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+  }
+}
+
+.shiny-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.shiny-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent);
+  transform: skewX(-20deg);
+  animation: shiny-sweep 2s infinite;
+}
+
 /* Arrow travel animation for roadmap */
 @keyframes arrowTravel {
   0% {
@@ -761,4 +810,118 @@ img {
 
 .card-3d-content {
   transform: translateZ(20px);
+}
+
+/* ============================================
+   SOLANA WALLET CUSTOM STYLES
+   ============================================ */
+
+.wallet-adapter-wrapper .wallet-adapter-button {
+  background-color: transparent !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  height: 56px !important;
+  padding: 0 32px !important;
+  border-radius: 16px !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  background-image: linear-gradient(to right, #d97706, #f59e0b) !important;
+  color: white !important;
+  box-shadow: 0 10px 15px -3px rgba(180, 83, 9, 0.4) !important;
+}
+
+.wallet-adapter-wrapper .wallet-adapter-button:not([disabled]):hover {
+  background-image: linear-gradient(to right, #f59e0b, #fbbf24) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 15px 20px -5px rgba(180, 83, 9, 0.5), 0 0 10px rgba(245, 158, 11, 0.5) !important;
+}
+
+.wallet-adapter-wrapper .wallet-adapter-button-trigger {
+  background-image: linear-gradient(to right, #b45309, #d97706) !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  background: #18181b !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8) !important;
+}
+
+.wallet-adapter-modal-title {
+  color: white !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.wallet-adapter-modal-list {
+  margin-top: 16px !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button {
+  background: rgba(39, 39, 42, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 12px !important;
+  margin-bottom: 8px !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button:hover {
+  background: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+.wallet-adapter-modal-button-close {
+  background: rgba(39, 39, 42, 0.8) !important;
+  border-radius: 50% !important;
+}
+
+.shimmer-text-red {
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 25%, #fca5a5 50%, #f87171 75%, #ef4444 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes glow-pulse-red {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), 0 0 40px rgba(239, 68, 68, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(239, 68, 68, 0.4);
+  }
+}
+
+.glow-pulse-red {
+  animation: glow-pulse-red 2s ease-in-out infinite;
+}
+
+@keyframes ticket-fall {
+  0% {
+    transform: translateY(-50px) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(300px) rotate(720deg) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.animate-ticket-fall {
+  animation: ticket-fall 6s ease-in forwards;
 }

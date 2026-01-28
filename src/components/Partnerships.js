@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLink, Star } from 'lucide-react';
 
-const PartnerCard = ({ name, logo, link, featured }) => (
+const PartnerCard = ({ name, logo, link, featured, isLarge }) => (
   <a 
     href={link} 
     target="_blank" 
@@ -18,11 +18,11 @@ const PartnerCard = ({ name, logo, link, featured }) => (
     )}
     
     {/* Logo container */}
-    <div className="relative p-4">
+    <div className={`relative ${isLarge ? 'p-0 flex items-center justify-center min-h-[96px]' : 'p-4'}`}>
       <img 
         src={logo} 
         alt={name} 
-        className="h-12 w-auto transition-all duration-300 group-hover:scale-110 filter brightness-90 group-hover:brightness-100" 
+        className={`${isLarge ? 'h-24' : 'h-12'} w-auto max-w-full object-contain transition-all duration-300 group-hover:scale-110 filter brightness-90 group-hover:brightness-100`} 
       />
       {/* Glow effect */}
       <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -65,6 +65,12 @@ const Partnerships = () => {
       name: "Jupiter",
       logo: "/images/partners/jupiter.png",
       link: "https://jup.ag"
+    },
+    {
+      name: "Coinbase",
+      logo: "/images/partners/coinbase.png",
+      link: "https://www.coinbase.com/price/black-wallstreet--solana-f78c0925",
+      isLarge: true
     }
   ];
 
