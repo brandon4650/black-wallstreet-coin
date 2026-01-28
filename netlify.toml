@@ -4,6 +4,7 @@
 
 [build.environment]
   NPM_FLAGS = "--legacy-peer-deps"
+  CI = "false"
 
 [[redirects]]
   from = "/*"

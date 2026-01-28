@@ -12,6 +12,7 @@ module.exports = function override(config) {
         "url": require.resolve("url"),
         "zlib": require.resolve("browserify-zlib"),
         "path": require.resolve("path-browserify"),
+        "vm": require.resolve("vm-browserify"),
     });
     config.resolve.fallback = fallback;
     config.module.rules.push({
