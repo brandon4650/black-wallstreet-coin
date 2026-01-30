@@ -124,7 +124,7 @@ const BlackWallStreetCoin = () => {
                 Live Chart <TrendingUp className="h-4 w-4" />
               </a>
               <button
-                onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                onClick={() => window.open('https://t.me/Blackwallstreetsol ', '_blank')}
                 className="relative overflow-hidden bg-gradient-to-r from-amber-600 to-amber-500 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] group"
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -164,7 +164,7 @@ const BlackWallStreetCoin = () => {
                 Live Chart
               </a>
               <button
-                onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                onClick={() => window.open('https://t.me/Blackwallstreetsol ', '_blank')}
                 className="w-full bg-gradient-to-r from-amber-600 to-amber-500 px-6 py-3 rounded-full font-semibold mt-2"
               >
                 Join the Movement
@@ -555,7 +555,7 @@ const BlackWallStreetCoin = () => {
                   Buy $TULSA
                 </button>
                 <button
-                  onClick={() => window.open('https://t.co/J9bOqE3Z8w', '_blank')}
+                  onClick={() => window.open('https://t.me/Blackwallstreetsol ', '_blank')}
                   className="w-full sm:w-auto glass px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2"
                 >
                   Join Telegram <ExternalLink className="h-4 w-4" />
@@ -584,7 +584,7 @@ const BlackWallStreetCoin = () => {
                 <Twitter className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500" />
               </a>
               <a 
-                href="https://t.co/J9bOqE3Z8w" 
+                href="https://t.me/Blackwallstreetsol " 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full glass flex items-center justify-center hover:bg-amber-500/20 transition-colors"
@@ -606,3 +606,4 @@ const BlackWallStreetCoin = () => {
 };
 
 export default BlackWallStreetCoin;
+
