@@ -9,7 +9,7 @@ const TULSA_MINT = "8TVr3U85V3Uazkxd5DJbmzdUWaxhQdEGNNGJ7eNTpump";
 const REQUIRED_BALANCE = 50000; 
  
 const MILESTONE_CONFIG = { 
-  "1M": { date: "2026-01-29T12:00:00-05:00", prize: "$10,000" }, // Official Date: Friday, Jan 30th @ 12:00 PM EST 
+  "1M": { date: "2026-01-30T12:00:00-05:00", prize: "$10,000" }, // Official Date: Friday, Jan 30th @ 12:00 PM EST 
   "10M": { date: "2026-02-15T00:00:00-05:00", prize: "$25,000" }, 
   "100M": { date: "2026-03-01T00:00:00-05:00", prize: "$50,000" }, 
   "1B": { date: "2026-04-01T00:00:00-05:00", prize: "$100,000" } 
@@ -1223,4 +1223,5 @@ const GiveawayPage = () => {
 };
 
 export default GiveawayPage;
+
 
