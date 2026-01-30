@@ -25,6 +25,7 @@ const GiveawayPage = () => {
   const [verificationStatus, setVerificationStatus] = useState('idle'); // idle, checking, qualified, insufficient, error, ip_blocked, vpn_blocked 
   const [vpnCountdown, setVpnCountdown] = useState(5);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isInitialSyncing, setIsInitialSyncing] = useState(true);
 
   // Obfuscated System Identifier
   const _sys_get_sid = useCallback(() => {
@@ -165,6 +166,7 @@ const GiveawayPage = () => {
  
   // Countdown Logic 
   useEffect(() => { 
+    if (isInitialSyncing) return; // Wait for archive sync
     const target = new Date(currentConfig.date).getTime(); 
  
     const updateTimer = () => { 
@@ -187,7 +189,7 @@ const GiveawayPage = () => {
     updateTimer(); 
     const timer = setInterval(updateTimer, 1000); 
     return () => clearInterval(timer); 
-  }, [currentConfig]); 
+  }, [currentConfig, isInitialSyncing]); 
  
   // Winner Selection Logic (The "Big Draw" with Easing) 
   const startWinnerDraw = useCallback(async () => { 
@@ -313,6 +315,7 @@ const GiveawayPage = () => {
  
   // Pre-Draw Hype Trigger (ONLY after clock hits zero) 
   useEffect(() => { 
+    if (isInitialSyncing) return; // Wait for archive sync
     const isZero = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0; 
      
     // Only trigger if we are at or past the milestone date 
@@ -333,7 +336,7 @@ const GiveawayPage = () => {
       setPreDrawCountdown(-1); // Mark as triggered 
       startWinnerDraw(); 
     } 
-  }, [timeLeft, isDrawing, isDrawComplete, preDrawCountdown, startWinnerDraw]); 
+  }, [timeLeft, isDrawing, isDrawComplete, preDrawCountdown, startWinnerDraw, isInitialSyncing]); 
 
   // Auto-sync Official Winners from Archive
   useEffect(() => {
@@ -348,7 +351,12 @@ const GiveawayPage = () => {
   // Global Data Initial Sync (Important for non-connected viewers)
   useEffect(() => {
     const runInitialSync = async () => {
-      try { await _sys_fetch_entries(); } catch(e) {}
+      try { 
+        await _sys_fetch_entries(); 
+      } catch(e) {
+      } finally {
+        setIsInitialSyncing(false);
+      }
     };
     runInitialSync();
   }, [_sys_fetch_entries]);
@@ -735,7 +743,7 @@ const GiveawayPage = () => {
  
         {/* Countdown HUD / Winner HUD */} 
         <div className={`w-full bg-zinc-900/40 backdrop-blur-xl border border-amber-500/20 rounded-[2.5rem] px-8 mb-12 mt-12 relative overflow-hidden group/countdown animate-scale-up flex items-center transition-all duration-1000 ease-in-out ${ 
-          isDrawing || isDrawComplete || (preDrawCountdown !== null && preDrawCountdown > 0) ? 'min-h-[280px] py-12' : 'min-h-[160px] py-8' 
+          isInitialSyncing ? 'min-h-[160px] py-8' : (isDrawing || isDrawComplete || (preDrawCountdown !== null && preDrawCountdown > 0) ? 'min-h-[280px] py-12' : 'min-h-[160px] py-8')
         }`}> 
           <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5 opacity-50" /> 
           <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" /> 
@@ -759,8 +767,17 @@ const GiveawayPage = () => {
             </div> 
           )} 
  
-          <div className="relative z-10 w-full flex flex-col md:flex-row items-center justify-between gap-8"> 
+          <div className={`relative z-10 w-full flex flex-col md:flex-row items-center justify-between gap-8 ${isInitialSyncing ? 'justify-center' : ''}`}> 
  
+            {isInitialSyncing ? (
+              <div className="flex flex-col items-center gap-4 animate-pulse">
+                <Loader2 className="h-12 w-12 text-amber-500 animate-spin" />
+                <div className="flex flex-col items-center">
+                  <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em]">Establishing_Secure_Link</span>
+                  <span className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-1 italic">Scanning Official Archives...</span>
+                </div>
+              </div>
+            ) : (
             <div className={`flex flex-col items-center gap-6 transition-all duration-700 w-full ${isDrawing || isDrawComplete || preDrawCountdown > 0 ? 'opacity-100 scale-100' : ''}`}> 
                
               {/* 1. Milestone & Prize info (Prominent Header) */} 
@@ -878,6 +895,7 @@ const GiveawayPage = () => {
                 </div> 
               )} 
             </div> 
+            )}
           </div> 
            
           {/* Auto-trigger logic is in useEffect */} 
