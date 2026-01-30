@@ -78,7 +78,8 @@ const GiveawayPage = () => {
                 const parts = strEntry.replace("OFFICIAL_WINNER_", "").split(":");
                 if (parts.length >= 2) {
                   const m = parts[0];
-                  const addr = parts[1];
+                  // Extract only the address part (handle trailing metadata/tabs)
+                  const addr = parts[1].split(/\s+/)[0]; 
                   if (!winners[m]) winners[m] = [];
                   if (!winners[m].includes(addr)) winners[m].push(addr);
                 }
@@ -783,36 +784,38 @@ const GiveawayPage = () => {
                 </h3> 
               </div> 
  
-              {/* 2. Main Clock (Stays at 0 during hype/draw) */} 
-              <div className="flex flex-col items-center gap-4"> 
-                <div className="flex items-center gap-4 sm:gap-6"> 
-                  {[ 
-                    { label: 'DAYS', value: timeLeft.days }, 
-                    { label: 'HRS', value: timeLeft.hours }, 
-                    { label: 'MINS', value: timeLeft.minutes }, 
-                    { label: 'SECS', value: timeLeft.seconds } 
-                  ].map((unit, i) => ( 
-                    <React.Fragment key={unit.label}> 
-                      <div className="flex flex-col items-center min-w-[50px] sm:min-w-[70px]"> 
-                        <span className="text-3xl sm:text-4xl font-black text-white tabular-nums tracking-tighter shimmer-text"> 
-                          {unit.value.toString().padStart(2, '0')} 
-                        </span> 
-                        <span className="text-[8px] sm:text-[10px] font-black text-zinc-500 uppercase tracking-widest mt-1">{unit.label}</span> 
-                      </div> 
-                      {i < 3 && <div className="h-10 w-[1px] bg-white/10 mx-1" />} 
-                    </React.Fragment> 
-                  ))} 
+              {/* 2. Main Clock (Hidden if draw complete) */} 
+              {!isDrawComplete && (
+                <div className="flex flex-col items-center gap-4 animate-scale-up"> 
+                  <div className="flex items-center gap-4 sm:gap-6"> 
+                    {[ 
+                      { label: 'DAYS', value: timeLeft.days }, 
+                      { label: 'HRS', value: timeLeft.hours }, 
+                      { label: 'MINS', value: timeLeft.minutes }, 
+                      { label: 'SECS', value: timeLeft.seconds } 
+                    ].map((unit, i) => ( 
+                      <React.Fragment key={unit.label}> 
+                        <div className="flex flex-col items-center min-w-[50px] sm:min-w-[70px]"> 
+                          <span className="text-3xl sm:text-4xl font-black text-white tabular-nums tracking-tighter shimmer-text"> 
+                            {unit.value.toString().padStart(2, '0')} 
+                          </span> 
+                          <span className="text-[8px] sm:text-[10px] font-black text-zinc-500 uppercase tracking-widest mt-1">{unit.label}</span> 
+                        </div> 
+                        {i < 3 && <div className="h-10 w-[1px] bg-white/10 mx-1" />} 
+                      </React.Fragment> 
+                    ))} 
+                  </div> 
+  
+                  {/* 3. Detailed Date/Time/Timezone - ALWAYS VISIBLE BELOW CLOCK */} 
+                  <div className="flex items-center gap-2 text-[10px] font-black text-zinc-600 bg-black/20 px-4 py-1.5 rounded-full border border-white/5"> 
+                    <Calendar className="w-3 h-3 text-amber-500/50" /> 
+                    <span className="uppercase tracking-[0.1em]"> 
+                      {new Date(currentConfig.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })} @ 
+                      {' '} {new Date(currentConfig.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short' })} 
+                    </span> 
+                  </div> 
                 </div> 
- 
-                {/* 3. Detailed Date/Time/Timezone - ALWAYS VISIBLE BELOW CLOCK */} 
-                <div className="flex items-center gap-2 text-[10px] font-black text-zinc-600 bg-black/20 px-4 py-1.5 rounded-full border border-white/5"> 
-                  <Calendar className="w-3 h-3 text-amber-500/50" /> 
-                  <span className="uppercase tracking-[0.1em]"> 
-                    {new Date(currentConfig.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })} @ 
-                    {' '} {new Date(currentConfig.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short' })} 
-                  </span> 
-                </div> 
-              </div> 
+              )}
  
               {/* 4. Draw Overlay Logic - BELOW CLOCK */} 
               {(preDrawCountdown > 0 || isDrawing || isDrawComplete) && ( 
@@ -1223,5 +1226,3 @@ const GiveawayPage = () => {
 };
 
 export default GiveawayPage;
-
-
