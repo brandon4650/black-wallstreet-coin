@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 const MilestoneAnnouncement = ({ marketCap }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [officialWinners, setOfficialWinners] = useState({});
+  const [isSyncing, setIsSyncing] = useState(true);
   const [lockedMilestones, setLockedMilestones] = useState(() => {
     try {
       const stored = JSON.parse(localStorage.getItem('bws_locked_milestones') || '[]');
@@ -17,6 +19,44 @@ const MilestoneAnnouncement = ({ marketCap }) => {
       return ['1M'];
     }
   });
+
+  // Archive Sync Logic
+  useEffect(() => {
+    const runSync = async () => {
+      try {
+        const parts = ["QUtmeWNieEZvN1dpV1FIRTd4Q182WVNJNFNweVBT", "Mkp3eTR2N1NCOWZ2TVNmSGJSUnB4WTAtVWhOWlZIVVNnNktlMWtHMExG"];
+        const SID = atob(parts[0]) + atob(parts[1]);
+        const SCRIPT_URL = `https://script.google.com/macros/s/${SID}/exec`;
+        const target = `https://corsproxy.io/?${encodeURIComponent(SCRIPT_URL + '?t=' + Date.now())}`;
+        
+        const res = await fetch(target);
+        if (res.ok) {
+          const data = await res.json();
+          const raw = Array.isArray(data) ? data.flat(Infinity) : [];
+          const winners = {};
+          
+          raw.forEach(entry => {
+            const str = String(entry || "").trim();
+            if (str.startsWith("OFFICIAL_WINNER_")) {
+              const p = str.replace("OFFICIAL_WINNER_", "").split(":");
+              if (p.length >= 2) {
+                const m = p[0];
+                const addr = p[1].split(/\s+/)[0];
+                if (!winners[m]) winners[m] = [];
+                winners[m].push(addr);
+              }
+            }
+          });
+          setOfficialWinners(winners);
+        }
+      } catch (e) {
+        console.error("Archive Sync Error:", e);
+      } finally {
+        setIsSyncing(false);
+      }
+    };
+    runSync();
+  }, []);
 
   const milestones = [
     { mc: 1000000, label: "1M", reward: "$10,000", icon: "/images/icon-1m.png" },
@@ -139,17 +179,22 @@ const MilestoneAnnouncement = ({ marketCap }) => {
                     <div className="text-right flex items-center gap-3">
                       {isReached ? (
                         <div className="flex items-center gap-2">
-                          <Link 
-                            to="/giveaway" 
-                            className="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-400 text-[10px] sm:text-xs font-black hover:bg-amber-500/30 transition-all border border-amber-500/30 animate-pulse"
-                          >
-                            ENTER GIVEAWAY
-                          </Link>
+                          {officialWinners[item.label] ? (
+                             <div className="px-3 py-1 bg-green-500/10 border border-green-500/30 rounded-lg">
+                               <span className="text-green-500 text-[9px] font-black tracking-widest uppercase">COMPLETE</span>
+                             </div>
+                          ) : (
+                            <Link 
+                              to="/giveaway" 
+                              className="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-400 text-[10px] sm:text-xs font-black hover:bg-amber-500/30 transition-all border border-amber-500/30 animate-pulse"
+                            >
+                              ENTER GIVEAWAY
+                            </Link>
+                          )}
                           <div className="relative animate-wiggle flex items-center justify-center">
                             <span className="shimmer-text text-2xl font-black drop-shadow-[0_0_12px_rgba(245,158,11,0.6)] select-none">
                               ✔
                             </span>
-                            <div className="absolute inset-x-0 h-px bg-white/20 blur-sm -skew-x-12 opacity-50" />
                           </div>
                         </div>
                       ) : (
@@ -175,10 +220,46 @@ const MilestoneAnnouncement = ({ marketCap }) => {
                     </p>
                   )}
                   {isReached && (
-                    <p className="text-[10px] text-green-500 font-bold mt-2 flex items-center gap-1">
-                      <Trophy className="h-3 w-3" />
-                      MILESTONE REACHED! GIVEAWAY ACTIVE!
-                    </p>
+                    <div className="mt-3 space-y-2">
+                       <p className={`text-[10px] font-bold flex items-center gap-1 ${officialWinners[item.label] ? 'text-green-500/70' : 'text-green-500'}`}>
+                        {officialWinners[item.label] ? (
+                          <>
+                            <Trophy className="h-3 w-3" />
+                            GIVEAWAY COMPLETE - WINNER ANNOUNCED!
+                          </>
+                        ) : (
+                          <>
+                            <Trophy className="h-3 w-3" />
+                            MILESTONE REACHED! GIVEAWAY ACTIVE!
+                          </>
+                        )}
+                      </p>
+
+                      {officialWinners[item.label] && (
+                        <div className="flex flex-col gap-2">
+                          {officialWinners[item.label].map((addr, idx) => (
+                            <div key={idx} className="flex items-center justify-between bg-black/40 border border-amber-500/20 rounded-xl px-4 py-2.5 animate-scale-up backdrop-blur-sm">
+                               <div className="flex items-center gap-3">
+                                 <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/30">
+                                   <Gift className="h-4 w-4 text-amber-500" />
+                                 </div>
+                                 <div className="flex flex-col">
+                                   <span className="text-[9px] font-black text-amber-500/60 uppercase tracking-widest">
+                                     {officialWinners[item.label].length > 1 ? `WINNER #${idx + 1}` : 'Official Selection'}:
+                                   </span>
+                                   <span className="text-xs font-mono font-bold text-white tracking-widest uppercase">
+                                     {addr.slice(0, 8)}...{addr.slice(-8)}
+                                   </span>
+                                 </div>
+                               </div>
+                               <div className="flex items-center gap-2">
+                                  <span className="text-[9px] font-black text-green-500 uppercase bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">VERIFIED</span>
+                               </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               );

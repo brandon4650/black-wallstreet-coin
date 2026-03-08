@@ -84,7 +84,14 @@ const GiveawayPage = () => {
                   if (!winners[m]) winners[m] = [];
                   if (!winners[m].includes(addr)) winners[m].push(addr);
                 }
-              } else if (strEntry.length > 30 && !strEntry.includes("{")) {
+              } else if (strEntry.includes("_ENTRY:")) {
+                // Milestone-aware entry (New Format: "1M_ENTRY:Address")
+                const [m, addr] = strEntry.split("_ENTRY:");
+                if (m === activeMilestone && addr) {
+                  cleanEntries.push(addr);
+                }
+              } else if (activeMilestone === "1M" && strEntry.length > 30 && !strEntry.includes("{") && !strEntry.includes("_")) {
+                // Legacy support for 1M milestone (untagged addresses)
                 cleanEntries.push(strEntry);
               }
             });
@@ -108,6 +115,8 @@ const GiveawayPage = () => {
     for (const winAddr of winners) {
       const entryData = {
         wallet: `OFFICIAL_WINNER_${milestone}:${winAddr}`,
+        ip: "N/A",
+        balance: 0,
         timestamp: new Date().toISOString(),
         type: 'WINNER_RECORD'
       };
@@ -476,7 +485,8 @@ const GiveawayPage = () => {
   useEffect(() => { 
     if (publicKey && userIP) { 
       const pubKeyStr = publicKey.toBase58(); 
-      const records = JSON.parse(localStorage.getItem('bws_giveaway_entries') || '{}'); 
+      const storageKey = `bws_giveaway_entries_${activeMilestone}`;
+      const records = JSON.parse(localStorage.getItem(storageKey) || '{}'); 
        
       // If the wallet itself has submitted 
       const walletSubmitted = records[pubKeyStr] === true; 
@@ -512,10 +522,11 @@ const GiveawayPage = () => {
       setVerificationStatus('checking'); 
        
       const pubKeyStr = activeKey.toBase58(); 
-      console.log(forced ? "FORCE SCAN" : "AUTO SCAN", pubKeyStr); 
+      console.log(forced ? `FORCE SCAN [${activeMilestone}]` : `AUTO SCAN [${activeMilestone}]`, pubKeyStr); 
  
       // Consolidated Security Check: VPN + Associated Wallet Tracking 
-      const records = JSON.parse(localStorage.getItem('bws_giveaway_entries') || '{}'); 
+      const storageKey = `bws_giveaway_entries_${activeMilestone}`;
+      const records = JSON.parse(localStorage.getItem(storageKey) || '{}'); 
        
       // 1. Detect if this IP is using a DIFFERENT wallet than what's registered (Multi-entry attempt) 
       if (records[userIP] && records[userIP] !== pubKeyStr) { 
@@ -607,7 +618,7 @@ const GiveawayPage = () => {
   }, [connected, publicKey?.toBase58(), checkBalance, userIP]); 
  
   const handleEntry = async () => { 
-    if (verificationStatus !== 'qualified' || !publicKey || !userIP || isBanned) return; 
+    if (verificationStatus !== 'qualified' || !publicKey || !userIP || isBanned || isDrawComplete) return; 
      
     setIsVerifying(true); 
     setDuplicateDetected(false); 
@@ -626,7 +637,8 @@ const GiveawayPage = () => {
         allEntries = syncResult.entries;
       } catch (e) {
         // Fallback to local records
-        const localRecords = JSON.parse(localStorage.getItem('bws_giveaway_entries') || '{}');
+        const storageKey = `bws_giveaway_entries_${activeMilestone}`;
+        const localRecords = JSON.parse(localStorage.getItem(storageKey) || '{}');
         if (localRecords[pubKeyStr] || localRecords[userIP]) {
            allEntries = [pubKeyStr, userIP]; 
         }
@@ -661,9 +673,10 @@ const GiveawayPage = () => {
  
       // 2. Safe Submission
       const entryData = {
-        wallet: pubKeyStr,
+        wallet: `${activeMilestone}_ENTRY:${pubKeyStr}`,
         ip: userIP,
         balance: balance,
+        milestone: activeMilestone,
         timestamp: new Date().toISOString()
       };
 
@@ -677,10 +690,11 @@ const GiveawayPage = () => {
       }
  
       // Record locally 
-      const records = JSON.parse(localStorage.getItem('bws_giveaway_entries') || '{}'); 
+      const storageKey = `bws_giveaway_entries_${activeMilestone}`;
+      const records = JSON.parse(localStorage.getItem(storageKey) || '{}'); 
       records[pubKeyStr] = true; 
       records[userIP] = pubKeyStr; 
-      localStorage.setItem('bws_giveaway_entries', JSON.stringify(records)); 
+      localStorage.setItem(storageKey, JSON.stringify(records)); 
        
       setHasSubmitted(true); 
     } catch (e) { 
@@ -986,6 +1000,21 @@ const GiveawayPage = () => {
                                  Permanent exclusion from BWS giveaways due to continuous security violations.
                                </p>
                             </div>
+                          ) : isDrawComplete && !hasSubmitted ? (
+                            <div className="flex flex-col items-center gap-6 bg-zinc-900/60 border-2 border-zinc-700 p-10 rounded-[2.5rem] relative overflow-hidden text-center w-full">
+                               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)]" />
+                               <div className="w-20 h-20 rounded-full bg-zinc-800 flex items-center justify-center border-2 border-zinc-700 shadow-inner relative z-10 mb-2">
+                                 <Sparkles className="h-10 w-10 text-zinc-500" />
+                               </div>
+                               <h5 className="text-2xl font-black text-zinc-500 tracking-widest uppercase relative z-10">GIVEAWAY CLOSED</h5>
+                               <p className="text-zinc-500 text-sm font-bold relative z-10 max-w-[320px]">
+                                 The drawing for the {activeMilestone} milestone has already concluded. Please stay tuned for the next mission!
+                               </p>
+                               <div className="pt-4 flex flex-col items-center gap-2">
+                                  <div className="w-2 h-2 rounded-full bg-zinc-700" />
+                                  <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Official Entry Window Expired</span>
+                               </div>
+                            </div>
                           ) : (
                             <>
                               <div className="flex flex-col items-center gap-4 bg-amber-500/10 border border-amber-500/30 p-6 rounded-2xl animate-scale-up relative overflow-hidden group/success w-full">
@@ -996,7 +1025,9 @@ const GiveawayPage = () => {
                                   </span>
                                 </div>
                                 <div className="text-center relative z-10">
-                                  <h5 className="text-amber-500 font-black text-xl tracking-tighter shimmer-text uppercase">QUALIFIED FOR GIVEAWAY!</h5>
+                                  <h5 className="text-amber-500 font-black text-xl tracking-tighter shimmer-text uppercase">
+                                    {isDrawComplete ? "QUALIFIED (CLOSED)" : "QUALIFIED FOR GIVEAWAY!"}
+                                  </h5>
                                   <p className="text-zinc-400 text-sm mt-1 font-medium italic">
                                     Wallet: <span className="text-white font-bold">{walletAddress}</span>
                                   </p>

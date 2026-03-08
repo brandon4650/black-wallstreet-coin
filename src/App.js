@@ -12,6 +12,8 @@ import '@solana/wallet-adapter-react-ui/styles.css';
 import BlackWallStreetCoin from './components/BlackWallStreetCoin';
 import DexChart from './components/DexChart';
 import GiveawayPage from './components/GiveawayPage';
+import GamesHub from './components/GamesHub';
+import TulsaCrash from './components/TulsaCrash';
 
 function App() {
   const network = WalletAdapterNetwork.Mainnet;
@@ -35,6 +37,8 @@ function App() {
               <Route path="/" element={<BlackWallStreetCoin />} />
               <Route path="/chart" element={<DexChart />} />
               <Route path="/giveaway" element={<GiveawayPage />} />
+              <Route path="/games" element={<GamesHub />} />
+              <Route path="/games/crash" element={<TulsaCrash />} />
             </Routes>
           </Router>
         </WalletModalProvider>

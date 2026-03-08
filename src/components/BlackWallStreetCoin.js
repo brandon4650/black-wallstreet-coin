@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Building2, ChevronDown, ArrowRight, BarChart, Shield, Users, Globe, Check, Sparkles, ExternalLink, Copy, Star, Zap, TrendingUp, Rocket, Twitter } from 'lucide-react';
 import axios from 'axios';
 import ParticleBackground from './ParticleBackground';
@@ -117,6 +118,24 @@ const BlackWallStreetCoin = () => {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-300 group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
+              <Link 
+                to="/games" 
+                className="relative text-amber-500 font-black uppercase tracking-widest hover:text-amber-400 transition-colors group py-2 flex items-center gap-2"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                Games Hub
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300" />
+              </Link>
+              <a 
+                href="https://bwscrypto.netlify.app/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative text-amber-500 font-black uppercase tracking-widest hover:text-amber-400 transition-colors group py-2 flex items-center gap-2"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                BWS Academy
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300" />
+              </a>
               <a 
                 href="/chart" 
                 className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1"
@@ -160,6 +179,12 @@ const BlackWallStreetCoin = () => {
                   {item}
                 </a>
               ))}
+              <Link to="/games" className="block px-4 py-3 text-amber-500 font-black uppercase tracking-widest hover:bg-amber-500/10 rounded-lg">
+                Games Hub
+              </Link>
+              <a href="https://bwscrypto.netlify.app/" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 text-amber-500 font-black uppercase tracking-widest hover:bg-amber-500/10 rounded-lg">
+                BWS Academy
+              </a>
               <a href="/chart" className="block px-4 py-3 text-amber-400 hover:bg-amber-500/10 rounded-lg">
                 Live Chart
               </a>
@@ -606,4 +631,3 @@ const BlackWallStreetCoin = () => {
 };
 
 export default BlackWallStreetCoin;
-
