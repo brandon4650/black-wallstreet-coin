@@ -14,6 +14,7 @@ import MilestoneAnnouncement from './MilestoneAnnouncement';
 const BlackWallStreetCoin = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showComingSoon, setShowComingSoon] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const heroRef = useRef(null);
   
@@ -81,6 +82,45 @@ const BlackWallStreetCoin = () => {
       <PriceBanner tokenData={tokenData} />
       <BackgroundMusic />
       <MilestoneAnnouncement marketCap={tokenData.marketCap} />
+
+      {/* Coming Soon Modal */}
+      {showComingSoon && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={() => setShowComingSoon(false)}>
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" style={{ animation: 'fadeIn 0.3s ease-out' }} />
+          <div 
+            className="relative glass rounded-3xl p-8 sm:p-10 max-w-md w-full border border-amber-500/30 text-center overflow-hidden"
+            style={{ animation: 'modalSlideIn 0.4s ease-out' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Glow effects */}
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-amber-600/15 rounded-full blur-3xl" />
+            
+            {/* Icon */}
+            <div className="relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30 flex items-center justify-center mb-6">
+              <Sparkles className="h-10 w-10 text-amber-500" style={{ animation: 'spinSlow 3s linear infinite' }} />
+            </div>
+            
+            <h3 className="text-2xl sm:text-3xl font-black mb-3">
+              <span className="shimmer-text">Coming Soon</span>
+            </h3>
+            <p className="text-zinc-400 mb-2 text-base sm:text-lg leading-relaxed">
+              The <span className="text-amber-400 font-semibold">Games Hub</span> is currently under development.
+            </p>
+            <p className="text-zinc-500 text-sm mb-8">
+              We're building something amazing — check back at a later date!
+            </p>
+            
+            <button 
+              onClick={() => setShowComingSoon(false)}
+              className="relative overflow-hidden bg-gradient-to-r from-amber-600 to-amber-500 px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] group"
+            >
+              <span className="relative z-10">Got It</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+          </div>
+        </div>
+      )}
       
       {/* Premium Navigation */}
       <nav className="fixed w-full z-50 transition-all duration-300" style={{
@@ -118,14 +158,14 @@ const BlackWallStreetCoin = () => {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-300 group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
-              <Link 
-                to="/games" 
-                className="relative text-amber-500 font-black uppercase tracking-widest hover:text-amber-400 transition-colors group py-2 flex items-center gap-2"
+              <button 
+                onClick={() => setShowComingSoon(true)} 
+                className="relative text-zinc-500 font-black uppercase tracking-widest hover:text-zinc-400 transition-colors group py-2 flex items-center gap-2 cursor-pointer"
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 animate-pulse" />
                 Games Hub
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300" />
-              </Link>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-zinc-500 group-hover:w-full transition-all duration-300" />
+              </button>
               <a 
                 href="https://bwscrypto.netlify.app/" 
                 target="_blank"
@@ -179,9 +219,9 @@ const BlackWallStreetCoin = () => {
                   {item}
                 </a>
               ))}
-              <Link to="/games" className="block px-4 py-3 text-amber-500 font-black uppercase tracking-widest hover:bg-amber-500/10 rounded-lg">
+              <button onClick={() => { setShowComingSoon(true); setIsMenuOpen(false); }} className="block w-full text-left px-4 py-3 text-zinc-500 font-black uppercase tracking-widest hover:bg-zinc-500/10 rounded-lg">
                 Games Hub
-              </Link>
+              </button>
               <a href="https://bwscrypto.netlify.app/" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 text-amber-500 font-black uppercase tracking-widest hover:bg-amber-500/10 rounded-lg">
                 BWS Academy
               </a>
